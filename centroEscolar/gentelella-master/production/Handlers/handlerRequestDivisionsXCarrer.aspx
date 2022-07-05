@@ -1,0 +1,2 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="handlerRequestDivisionsXCarrer.aspx.cs" Inherits="centroEscolar.gentelella_master.production.Handlers.handlerRequestDivisionsXCarrer" %>
+<%=getJsonResponse %>
