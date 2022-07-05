@@ -76,11 +76,11 @@ namespace CapaLogicaNegocio
         }
         private void validateDuplicateEmail(Student student) {
 
-            var existsEmail = DuplicateField.duplicate("correo", student.correoP, "alumnos");
+            var existsEmail = DuplicateField.duplicate("correoP", student.correoP, "alumnos");
             if (existsEmail)
             {
                 var campos = new Dictionary<string, string>();
-                campos.Add("correo", student.correoP);
+                campos.Add("correoP", student.correoP);
                 campos.Add("idAlumno", student.idAlumno.ToString());
 
                 var existsEmailAndID = DuplicateField.duplicate(campos, "alumnos");

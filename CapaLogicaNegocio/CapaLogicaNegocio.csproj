@@ -80,6 +80,7 @@
     <Compile Include="HoursService.cs" />
     <Compile Include="LevelService.cs" />
     <Compile Include="Lists\ListarAlumnos.cs" />
+    <Compile Include="Lists\ListCadidates.cs" />
     <Compile Include="Lists\ListCarrers.cs" />
     <Compile Include="Lists\ListDivisions.cs" />
     <Compile Include="Lists\ListGroups.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="recoverDates\RecoverDateHour.cs" />
     <Compile Include="StudentCandidateService.cs" />
     <Compile Include="SubjectService.cs" />
+    <Compile Include="tablesInner\TableCandidates.cs" />
     <Compile Include="updates\UpdateCarrer.cs" />
     <Compile Include="updates\UpdateDivision.cs" />
     <Compile Include="updates\UpdateGroup.cs" />

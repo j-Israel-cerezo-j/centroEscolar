@@ -125,6 +125,7 @@
     <Content Include="gentelella-master\production\css\maps\jquery-jvectormap-2.0.3.css" />
     <Content Include="gentelella-master\production\Handlers\handlerRequestDivisionsXCarrer.aspx" />
     <Content Include="gentelella-master\production\Handlers\preRegisterHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\tableCandidatesByDivisHandler.aspx" />
     <Content Include="gentelella-master\production\images\american-express.png" />
     <Content Include="gentelella-master\production\images\cropper.jpg" />
     <Content Include="gentelella-master\production\images\favicon.ico" />
@@ -154,6 +155,9 @@
     <Content Include="gentelella-master\production\js\personalizados\academicLevel\recoverDatas.js" />
     <Content Include="gentelella-master\production\js\personalizados\academicLevel\update.js" />
     <Content Include="gentelella-master\production\js\personalizados\Ajax\recoverData.js" />
+    <Content Include="gentelella-master\production\js\personalizados\candidates\ajax\recoverDataTableCandidatesXdivis.js" />
+    <Content Include="gentelella-master\production\js\personalizados\candidates\buildTableCandidates.js" />
+    <Content Include="gentelella-master\production\js\personalizados\candidates\tableXdivsion.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\buildTableCarrers.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\delete.js" />
@@ -171,9 +175,8 @@
     <Content Include="gentelella-master\production\js\personalizados\hours\delete.js" />
     <Content Include="gentelella-master\production\js\personalizados\hours\recoverData.js" />
     <Content Include="gentelella-master\production\js\personalizados\hours\update.js" />
-    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\addStudent.js" />
-    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\ajax\addStudentCandidate.js" />
-    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\alertWithDatas.js" />
+    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\ajax\addStudentCandidates.js" />
+    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\alertWithDataas.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\buildDivisionsInSelect.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\divisionesXcarrera.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\ajax\recoverDataDivisions.js" />
@@ -211,10 +214,12 @@
     <Content Include="gentelella-master\production\manageAcademicLevel.aspx" />
     <Content Include="gentelella-master\production\manageCarrers.aspx" />
     <Content Include="gentelella-master\production\manageDvisions.aspx" />
+    <Content Include="gentelella-master\production\manageEmployes.aspx" />
     <Content Include="gentelella-master\production\manageGroups.aspx" />
     <Content Include="gentelella-master\production\manageHours.aspx" />
     <Content Include="gentelella-master\production\managePeriods.aspx" />
     <Content Include="gentelella-master\production\manageStudent.aspx" />
+    <Content Include="gentelella-master\production\manageStudentsCandidates.aspx" />
     <Content Include="gentelella-master\production\manageSubjects.aspx" />
     <Content Include="gentelella-master\production\Handlers\submitHandlerCatalogos.aspx" />
     <Content Include="gentelella-master\production\preRegisterStudent.aspx" />
@@ -2340,6 +2345,13 @@
     <Compile Include="gentelella-master\production\Handlers\preRegisterHandler.aspx.designer.cs">
       <DependentUpon>preRegisterHandler.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\Handlers\tableCandidatesByDivisHandler.aspx.cs">
+      <DependentUpon>tableCandidatesByDivisHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\tableCandidatesByDivisHandler.aspx.designer.cs">
+      <DependentUpon>tableCandidatesByDivisHandler.aspx</DependentUpon>
+    </Compile>
     <Compile Include="gentelella-master\production\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2368,6 +2380,13 @@
     <Compile Include="gentelella-master\production\manageDvisions.aspx.designer.cs">
       <DependentUpon>manageDvisions.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\manageEmployes.aspx.cs">
+      <DependentUpon>manageEmployes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageEmployes.aspx.designer.cs">
+      <DependentUpon>manageEmployes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="gentelella-master\production\manageGroups.aspx.cs">
       <DependentUpon>manageGroups.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2395,6 +2414,13 @@
     </Compile>
     <Compile Include="gentelella-master\production\manageStudent.aspx.designer.cs">
       <DependentUpon>manageStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageStudentsCandidates.aspx.cs">
+      <DependentUpon>manageStudentsCandidates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageStudentsCandidates.aspx.designer.cs">
+      <DependentUpon>manageStudentsCandidates.aspx</DependentUpon>
     </Compile>
     <Compile Include="gentelella-master\production\manageSubjects.aspx.cs">
       <DependentUpon>manageSubjects.aspx</DependentUpon>

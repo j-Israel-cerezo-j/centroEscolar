@@ -1,26 +1,23 @@
-﻿function addStudentCandidate(formData) {
+﻿function recoverDataTableXdivisi(id) {
     Swal.fire({
         title: 'Cargando...',
         showConfirmButton: false
     })
-    var f = $(this);    
+    var f = $(this);
     $.ajax({
-        url: "Handlers/preRegisterHandler.aspx",
+        url: "Handlers/tableCandidatesByDivisHandler.aspx?id=" + id,
         type: "post",
         dataType: "json",
-        data: formData,
         cache: false,
         contentType: false,
         processData: false,
         success: function (resultado) {
             swal.close()
             if (resultado.success) {
-
-                alert("hola")
+                buildTableCandidates(resultado.data.recoverDates);
             }
             else {
-               
-                if (resultado.error == undefined) {                
+                if (resultado.error == undefined) {
                     Swal.fire({
                         icon: 'error',
                         confirmButtonColor: '#572364',
@@ -28,7 +25,7 @@
                         text: i
                     })
                 }
-                else {                    
+                else {
                     Swal.fire({
                         icon: 'error',
                         confirmButtonColor: '#572364',
@@ -50,5 +47,3 @@
 
     });
 }
-
-

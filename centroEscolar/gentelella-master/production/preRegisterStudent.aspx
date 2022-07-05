@@ -5,15 +5,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
 	 <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet"/>
 
     <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link href="../build/css/custom.min.css" rel="stylesheet"/>
     
       <!-- jquery.inputmask -->
    <%-- <script src="../vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>--%>
@@ -155,7 +156,7 @@
 						<div class="form-group">
 							<div class="col-md-6 offset-md-3">
 								<button type="reset" class="btn btn-success">Limpiar</button>
-							    <button type="submit" class="btn btn-primary" onclick="add()">Enviar registro</button>							    
+							    <button type="button" class="btn btn-primary" onclick="addStudentCandidate(event)">Enviar registro</button>							    
 							</div>
                         </div>
 					</div>
@@ -178,19 +179,19 @@
     <!-- validator -->
     <!-- <script src="../vendors/validator/validator.js"></script> -->
 
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
+    <!-- Custom Theme Scripts -->    
 	<script src="js/personalizados/utils/currentDate.js"></script>
-    
-    <script src="js/personalizados/preRegisterStudent/addStudent.js"></script>
-    <script src="js/personalizados/preRegisterStudent/ajax/recoverDataDivisions.js"></script>
-    <script src="js/personalizados/preRegisterStudent/divisionesXcarrera.js"></script>
+
+
+    <script src="js/personalizados/preRegisterStudent/ajax/recoverDataDivisions.js"></script>    
     <script src="js/personalizados/preRegisterStudent/buildDivisionsInSelect.js"></script>
-    <script src="js/personalizados/preRegisterStudent/ajax/addStudentCandidate.js"></script>
-	<script src="js/personalizados/preRegisterStudent/alertWithDatas.js"></script>
+    <script src="js/personalizados/preRegisterStudent/divisionesXcarrera.js"></script>
+
+    <script src="js/personalizados/preRegisterStudent/ajax/addStudentCandidates.js"></script>
+    <script src="js/personalizados/preRegisterStudent/alertWithDataas.js"></script>
+
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js" integrity="sha256-92U7H+uBjYAJfmb+iNPi7DPoj795ZCTY4ZYmplsn/fQ=" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+        
 
 	<script type="text/javascript">
 		window.onload = function () {

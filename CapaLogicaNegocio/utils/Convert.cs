@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Data;
+using System.Data.SqlClient;
 namespace CapaLogicaNegocio.utils
 {
     public  class Converter
@@ -48,6 +49,27 @@ namespace CapaLogicaNegocio.utils
             }
             json += "}";
             return json;
+        }
+        public static StringBuilder ToJson(DataTable table)
+        {
+            StringBuilder jsonSb = new StringBuilder();
+            jsonSb.Append("[");
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                jsonSb.Append("{");
+                for (int j = 0; j < table.Columns.Count; j++)
+                {
+                    jsonSb.Append(table.Columns[j].ColumnName+": '"+table.Rows[i][j].ToString()+"',");                    
+                }
+                jsonSb.Remove(jsonSb.Length-1, 1);
+                jsonSb.Append("},");
+            }
+            if (table.Rows.Count > 0)
+            {
+                jsonSb.Remove(jsonSb.Length - 1, 1);
+            }            
+            jsonSb.Append("]");
+            return jsonSb;
         }
         public static List<string> ToList(string str)
         {

@@ -45,8 +45,8 @@ namespace CapaDatos
                 Comando.Parameters["@curp"].Value = student.curp;
                 Comando.Parameters.Add(new SqlParameter("@pass", SqlDbType.VarChar, 100));
                 Comando.Parameters["@pass"].Value = student.pass;
-                Comando.Parameters.Add(new SqlParameter("@correo", SqlDbType.VarChar, 50));
-                Comando.Parameters["@correo"].Value = student.correoP;
+                Comando.Parameters.Add(new SqlParameter("@correoP", SqlDbType.VarChar, 50));
+                Comando.Parameters["@correoP"].Value = student.correoP;
                 Comando.Parameters.Add(new SqlParameter("@telefono", SqlDbType.VarChar, 30));
                 Comando.Parameters["@telefono"].Value = student.telefono;
                 Conexion.Open();
@@ -88,8 +88,8 @@ namespace CapaDatos
                 Comando.Parameters["@curp"].Value = student.curp;
                 Comando.Parameters.Add(new SqlParameter("@pass", SqlDbType.VarChar, 100));
                 Comando.Parameters["@pass"].Value = student.pass;
-                Comando.Parameters.Add(new SqlParameter("@correo", SqlDbType.VarChar, 50));
-                Comando.Parameters["@correo"].Value = student.correoP;
+                Comando.Parameters.Add(new SqlParameter("@correoP", SqlDbType.VarChar, 50));
+                Comando.Parameters["@correoP"].Value = student.correoP;
                 Comando.Parameters.Add(new SqlParameter("@telefono", SqlDbType.VarChar, 30));
                 Comando.Parameters["@telefono"].Value = student.telefono;
                 Conexion.Open();

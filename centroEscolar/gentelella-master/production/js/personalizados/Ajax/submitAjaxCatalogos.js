@@ -48,8 +48,7 @@ function catalogosAddUpdateDelete(typeR, formData) {
                 switchTablePahe(resultado.data.table, resultado.data.info)
             }
             else {
-                if (resultado.error == undefined) {
-                    console.log(resultado)
+                if (resultado.error == undefined) {                    
                     Swal.fire({
                         icon: 'error',
                         confirmButtonColor: '#572364',
@@ -58,14 +57,12 @@ function catalogosAddUpdateDelete(typeR, formData) {
                     })
                 }
                 else {
-                    for (var i of resultado.error) {
-                        Swal.fire({
-                            icon: 'error',
-                            confirmButtonColor: '#572364',
-                            title: 'Oops...',
-                            text: i
-                        })
-                    }
+                    Swal.fire({
+                        icon: 'error',
+                        confirmButtonColor: '#572364',
+                        title: 'Oops...',
+                        text: resultado.error
+                    })                    
                 }
             }
         },

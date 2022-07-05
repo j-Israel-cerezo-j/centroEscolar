@@ -26,14 +26,12 @@
                     })
                 }
                 else {
-                    for (var i of resultado.error) {
-                        Swal.fire({
-                            icon: 'error',
-                            confirmButtonColor: '#572364',
-                            title: 'Oops...',
-                            text: i
-                        })
-                    }
+                    Swal.fire({
+                        icon: 'error',
+                        confirmButtonColor: '#572364',
+                        title: 'Oops...',
+                        text: resultado.error
+                    })
                 }
             }
         },

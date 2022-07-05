@@ -35,7 +35,7 @@ namespace Entidades
             this.correoP = (string)Validation.getValue(renglon, "correoP");
             this.correoIns = (string)Validation.getValue(renglon, "correoIns");
             this.telefono = (string)Validation.getValue(renglon, "telefono");
-            this.fechaNac = (DateTime)Validation.getValue(renglon, "fechaNac");
+            this.fechaNac = (DateTime)(Validation.getValue(renglon, "fechaNac")?? new DateTime());
         }
     }
 }

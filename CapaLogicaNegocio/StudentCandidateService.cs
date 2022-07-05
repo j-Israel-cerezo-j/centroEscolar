@@ -16,10 +16,15 @@ using Newtonsoft.Json;
 using CapaLogicaNegocio.validateDuplicateField;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
+using CapaLogicaNegocio.tablesInner;
+using System.Data;
+using System.Data.SqlClient;
+
 namespace CapaLogicaNegocio
 {
     public class StudentCandidateService
     {
+        private TableCandidates tableCandidates = new TableCandidates();
         private AddDomicilie addDomicilie = new AddDomicilie();
         private AddStudentCandidate addStudentCandidate = new AddStudentCandidate();
         public string add(Dictionary<string, string> submit)
@@ -28,12 +33,17 @@ namespace CapaLogicaNegocio
             var camposEmptysOrNull = Validation.isNullOrEmptys(submit);
             if (camposEmptysOrNull.Count == 0)
             {
-                string dateNac = RetrieveAtributesValues.retrieveAtributesValues(submit, "fechaNac");
-                string fkDivision = RetrieveAtributesValues.retrieveAtributesValues(submit, "divisiones");
-                validateFormantDate(dateNac);
-                validateFormantDivision(fkDivision);
+
+                validateAttibutres(submit);
                 StudentCandidate studentCandidate = retriveAttributesDataPerson(submit);
-                validateAttibutres(studentCandidate);
+                var existsEmail = DuplicateField.duplicate("correoP", studentCandidate.correoP, "studentsCantidant");
+                if (existsEmail)
+                {
+                    throw new ServiceException("Correo ya existente");
+                }else if (DuplicateField.duplicate("curp", studentCandidate.curp, "studentsCantidant"))
+                {
+                    throw new ServiceException("Curp ya existente");
+                }
                 int idStudentCandidateAdd = addStudentCandidate.add(studentCandidate);
                 Domicilie domicilie = retriveAttributesDomicilies(submit, idStudentCandidateAdd);
                 bool exito= addDomicilie.add(domicilie);
@@ -70,27 +80,33 @@ namespace CapaLogicaNegocio
             domicilie.noExterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noExterior");
             domicilie.fkAlumno = idStudentCandidateAdd;
             return domicilie;
-        }
-        private void validateFormantDivision(string select)
+        }     
+        private void validateAttibutres(Dictionary<string,string> form)
         {
-            if (!Validation.Select(select))
+            string strDateOfBirth = RetrieveAtributesValues.retrieveAtributesValues(form, "fechaNac");
+            string fkDivision = RetrieveAtributesValues.retrieveAtributesValues(form, "divisiones");
+            string strTelefono = RetrieveAtributesValues.retrieveAtributesValues(form, "tel");
+            string strEmailPerson = RetrieveAtributesValues.retrieveAtributesValues(form, "email");
+
+            if (!Validation.Select(fkDivision))
             {
                 throw new ServiceException("Formato no correcto sobre divisiones");
             }
-        }
-        private void validateAttibutres(StudentCandidate studentCandidate)
-        {
-            if (!Validation.IsEmail(studentCandidate.correoP))
+            else if (!Validation.FormantDate(strDateOfBirth))
+            {
+                throw new ServiceException("Formato no correcto en fecha de nacimiento");
+            }
+            else if (!Validation.IsEmail(strEmailPerson))
             {
                 throw new ServiceException("Formato no correcto en correo");
             }
             else
             {
-                if (!Validation.numericalFormat(studentCandidate.telefono))
+                if (!Validation.numericalFormat(strTelefono))
                 {
                     throw new ServiceException("Formato no correcto en telefono(solo números)");
                 }
-                else if (!Validation.Long(studentCandidate.telefono, 10, 10))
+                else if (!Validation.Long(strTelefono, 10, 10))
                 {
                     throw new ServiceException("La longitud del telefono tiene que ser no menor a 10 y no mayor a 10");
                 }
@@ -104,24 +120,28 @@ namespace CapaLogicaNegocio
             studentCandidate.apellidoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoP");
             studentCandidate.apellidoM = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoM");
             studentCandidate.curp = RetrieveAtributesValues.retrieveAtributesValues(submit, "curp");
-            studentCandidate.matricula = UserUtils.GenerateMatricula(studentCandidate.curp);            
-            studentCandidate.correoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "email");
-            studentCandidate.correoIns=UserUtils.GenerateInstitutionalEmail(studentCandidate.matricula);  
-            studentCandidate.telefono = RetrieveAtributesValues.retrieveAtributesValues(submit, "tel");
-            studentCandidate.fechaNac = 
-                                    Convert.ToDateTime( RetrieveAtributesValues.retrieveAtributesValues(submit, "fechaNac"));
-            studentCandidate.fkIdDivision = Convert.ToInt32(
-                                            RetrieveAtributesValues.retrieveAtributesValues(submit, "divisiones")
-                                            );
+            studentCandidate.matricula = UserUtils.GenerateMatricula(studentCandidate.curp);                        
+            studentCandidate.correoIns=UserUtils.GenerateInstitutionalEmail(studentCandidate.matricula);              ;
             studentCandidate.pass = UserUtils.GeneratePasswordUser(studentCandidate.fechaNac);
+            studentCandidate.fechaNac = Convert.ToDateTime(
+                                        RetrieveAtributesValues.retrieveAtributesValues(submit, "fechaNac"));
+            studentCandidate.fkIdDivision = Convert.ToInt32(
+                                            RetrieveAtributesValues.retrieveAtributesValues(submit, "divisiones"));
+            studentCandidate.telefono = RetrieveAtributesValues.retrieveAtributesValues(submit, "tel");
+            studentCandidate.correoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "email");
             return studentCandidate;
-        }  
-        private void validateFormantDate(string date)
-        {            
-            if (!Validation.FormantDate(date))
-            {
-                throw new ServiceException("Formato no correcto en fecha de nacimiento");
-            }
+        }
+
+        public StringBuilder jsonCandidates()
+        {
+            var TableCandidates = tableCandidates.tableCandidates();
+            return Converter.ToJson(TableCandidates);
+        }
+        public string jsonCandidatesByIDdiv(string strId)
+        {
+            int id=Convert.ToInt32(strId);
+            var students = tableCandidates.tableCandidatesByIDdivision(id);
+            return Converter.ToJson(students).ToString();
         }
     }
 }

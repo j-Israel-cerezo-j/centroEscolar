@@ -13,6 +13,7 @@ namespace centroEscolar.gentelella_master.production
         public List<Carrer> getCarrers { get; set; }
         private DivisionService divisionSer = new DivisionService();
         public string getJsonDivisions { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             listCarrers();
