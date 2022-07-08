@@ -14,5 +14,9 @@ namespace CapaLogicaNegocio.Adds
         {
             return datos.add(domicilie);
         }
+        public int addAddres(Domicilie domicilie)
+        {
+            return datos.addAddress(domicilie);
+        }
     }
 }

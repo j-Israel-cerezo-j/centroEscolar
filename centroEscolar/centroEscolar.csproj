@@ -124,6 +124,7 @@
     <Content Include="gentelella-master\production\addUpdRol.aspx" />
     <Content Include="gentelella-master\production\css\maps\jquery-jvectormap-2.0.3.css" />
     <Content Include="gentelella-master\production\Handlers\handlerRequestDivisionsXCarrer.aspx" />
+    <Content Include="gentelella-master\production\Handlers\manageStatusCandidatesAlumHandler.aspx" />
     <Content Include="gentelella-master\production\Handlers\preRegisterHandler.aspx" />
     <Content Include="gentelella-master\production\Handlers\tableCandidatesByDivisHandler.aspx" />
     <Content Include="gentelella-master\production\images\american-express.png" />
@@ -156,7 +157,9 @@
     <Content Include="gentelella-master\production\js\personalizados\academicLevel\update.js" />
     <Content Include="gentelella-master\production\js\personalizados\Ajax\recoverData.js" />
     <Content Include="gentelella-master\production\js\personalizados\candidates\ajax\recoverDataTableCandidatesXdivis.js" />
+    <Content Include="gentelella-master\production\js\personalizados\candidates\ajax\manageStatusCandidate.js" />
     <Content Include="gentelella-master\production\js\personalizados\candidates\buildTableCandidates.js" />
+    <Content Include="gentelella-master\production\js\personalizados\candidates\changeStatus.js" />
     <Content Include="gentelella-master\production\js\personalizados\candidates\tableXdivsion.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\buildTableCarrers.js" />
@@ -180,11 +183,16 @@
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\buildDivisionsInSelect.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\divisionesXcarrera.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\ajax\recoverDataDivisions.js" />
+    <Content Include="gentelella-master\production\js\personalizados\students\displaySmartWizard.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\buildTableSubjects.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\delete.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\recoverDatas.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\buildColoniasByCP.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\buildCPInSelect.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\buildMexicoStates.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\builMunicipios.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\defaultBtnsDisplay.js" />
     <Content Include="gentelella-master\production\js\personalizados\FacadeCatalogosRecoverData\switchCatalogosRecoverData.js" />
     <Content Include="gentelella-master\production\js\personalizados\groups\addGroup.js" />
@@ -211,6 +219,10 @@
     <Content Include="gentelella-master\production\js\personalizados\students\update.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\currentDate.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\validatorForm.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\XMLHttpRquest\XMLHttpRequestColoniasByCP.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\XMLHttpRquest\XMLHttpRequestCPByMunicipio.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\XMLHttpRquest\XMLHttpRequestMunicipiosByState.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\XMLHttpRquest\XMLHttpRequestStatesMexico.js" />
     <Content Include="gentelella-master\production\manageAcademicLevel.aspx" />
     <Content Include="gentelella-master\production\manageCarrers.aspx" />
     <Content Include="gentelella-master\production\manageDvisions.aspx" />
@@ -2337,6 +2349,13 @@
     </Compile>
     <Compile Include="gentelella-master\production\Handlers\handlerRequestDivisionsXCarrer.aspx.designer.cs">
       <DependentUpon>handlerRequestDivisionsXCarrer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\manageStatusCandidatesAlumHandler.aspx.cs">
+      <DependentUpon>manageStatusCandidatesAlumHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\manageStatusCandidatesAlumHandler.aspx.designer.cs">
+      <DependentUpon>manageStatusCandidatesAlumHandler.aspx</DependentUpon>
     </Compile>
     <Compile Include="gentelella-master\production\Handlers\preRegisterHandler.aspx.cs">
       <DependentUpon>preRegisterHandler.aspx</DependentUpon>

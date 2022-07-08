@@ -16,16 +16,18 @@ using Newtonsoft.Json;
 using CapaLogicaNegocio.validateDuplicateField;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
+using CapaLogicaNegocio.tablesInner;
+using System.Data;
+
 namespace CapaLogicaNegocio
 {
     public class StudentService
     {
         private UpdateStudent updateStudents = new UpdateStudent();
-        private AddStudent addStudent= new AddStudent();
-        private ListarAlumnos listarAlumnos = new ListarAlumnos();
-        private DeleteStudent deleteStudent = new DeleteStudent();
-        private RecoverDataStudents recoverDatesStudents = new RecoverDataStudents();
-
+        private AddStudent addStudent= new AddStudent();        
+        private DeleteStudent deleteStudent = new DeleteStudent();        
+        private TableStudents tablesStudent = new TableStudents();
+        private UpdateAddress updateAdddress = new UpdateAddress();
         public bool add(Dictionary<string, string> submit) 
         {
             bool ban = false;
@@ -33,8 +35,7 @@ namespace CapaLogicaNegocio
             if (camposEmptysOrNull.Count == 0)
             {
                 Student student = retriveAttributesSubmit(submit);
-                string passConfirm= RetrieveAtributesValues.retrieveAtributesValues(submit, "confirmPassword");                
-                validateCampos(student, passConfirm);
+                validateCampos(student);
                 validateDuplicateEmail(student);
                 return addStudent.add(student);
             }
@@ -50,16 +51,9 @@ namespace CapaLogicaNegocio
             }            
             return ban;
         }
-        private void validateCampos(Student student,string passConfirm)
+        private void validateCampos(Student student)
         {
-            if (student.pass!=passConfirm)
-            {
-                throw new ServiceException("Las contraseñas no coinciden");
-            }
-            else if (!Validation.LongMin(student.pass,8))
-            {
-                throw new ServiceException("Longitud de contraseña debe ser minimo a 8 caracteres");
-            }else if (!Validation.IsEmail(student.correoP))
+            if (!Validation.IsEmail(student.correoP))
             {
                 throw new ServiceException("Formato no correcto en correo");
             }           
@@ -90,40 +84,60 @@ namespace CapaLogicaNegocio
                 }
             }
         }
+        private Domicilie retriveAttributesSubmitDomicilie(Dictionary<string, string> submit)
+        {
+            Domicilie domicilie = new Domicilie();
+            domicilie.calle = RetrieveAtributesValues.retrieveAtributesValues(submit, "nomcalle");
+            domicilie.noExterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noInterior");
+            domicilie.noInterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noExterior");
+
+            domicilie.estado = RetrieveAtributesValues.retrieveAtributesValues(submit, "state");
+            domicilie.municipio = RetrieveAtributesValues.retrieveAtributesValues(submit, "municipio");
+            domicilie.cp = RetrieveAtributesValues.retrieveAtributesValues(submit, "cp");
+            domicilie.colonia = RetrieveAtributesValues.retrieveAtributesValues(submit, "colonia");
+
+
+            domicilie.idDomicilio =Convert.ToInt32(
+                                                    RetrieveAtributesValues.retrieveAtributesValues(submit, "idDomicilie"));
+            return domicilie;
+        }
+
         private Student retriveAttributesSubmit(Dictionary<string, string> submit)
         {
             Student student = new Student();
-            student.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "nombres");
+            student.nombres = RetrieveAtributesValues.retrieveAtributesValues(submit, "nombres");
             student.apellidoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoP");
             student.apellidoM = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoM");
-            student.curp = RetrieveAtributesValues.retrieveAtributesValues(submit, "curp");
-            student.matricula = UserUtils.GenerateMatricula(student.curp);
-            student.pass = RetrieveAtributesValues.retrieveAtributesValues(submit, "password");
             student.correoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "email");
             student.telefono = RetrieveAtributesValues.retrieveAtributesValues(submit, "tel");
             return student;
         }       
         public string jsonStudents()
         {
-            List<Student> students = listarAlumnos.listarAlumnos();
-            return Converter.ToJson(students);
+            DataTable table = tablesStudent.tableStudents();
+            return Converter.ToJson(table).ToString();
         }
         public bool deleteStudents(string strIds)
         {
             return deleteStudent.delete(strIds);
-        }
+        }       
         public bool updateStudent(Dictionary<string, string> submit, string strId)
         {
             bool ban = false;
             var camposEmptysOrNull = Validation.isNullOrEmptys(submit);
             if (camposEmptysOrNull.Count == 0)
             {
+                validateCamposDomicilie(submit);
                 Student student = retriveAttributesSubmit(submit);
                 student.idAlumno = Convert.ToInt32(strId);
-                string passConfirm = RetrieveAtributesValues.retrieveAtributesValues(submit, "confirmPassword");
-                validateCampos(student, passConfirm);
+                Domicilie domicilie = retriveAttributesSubmitDomicilie(submit);
+                validateCampos(student);
                 validateDuplicateEmail(student);
-                return updateStudents.update(student);
+                bool updateExists = updateAdddress.update(domicilie);
+                if (updateExists)
+                {
+                    return updateStudents.update(student);
+                }                
             }
             else
             {
@@ -137,14 +151,37 @@ namespace CapaLogicaNegocio
             }
             return ban;
         }       
-        public string jsonRecoverData(string strId)
+        private void validateCamposDomicilie(Dictionary<string,string> form)
+        {
+            string strEstado = RetrieveAtributesValues.retrieveAtributesValues(form, "state");
+            string strMunicipio = RetrieveAtributesValues.retrieveAtributesValues(form, "municipio");
+            string strCP = RetrieveAtributesValues.retrieveAtributesValues(form, "cp");
+            string strColonia = RetrieveAtributesValues.retrieveAtributesValues(form, "colonia");
+
+            if (!Validation.Select(strEstado))
+            {
+                throw new ServiceException("Formato no correcto en el estado");
+            }
+            else if (!Validation.Select(strMunicipio))
+            {
+                throw new ServiceException("Formato no correcto sobre municipio");
+            }
+            else if (!Validation.Select(strCP))
+            {
+                throw new ServiceException("Formato no correcto sobre CP");
+            }
+            else if (!Validation.Select(strColonia))
+            {
+                throw new ServiceException("Formato no correcto sobre la colonia");
+            }
+        }
+        public string jsonRecoverData(string strIdStudent)
         {
             string jsonRecoerDtes = "";
-            if (strId != "")
+            if (strIdStudent != "")
             {
-                var students = new List<Student>();
-                students.Add(recoverDatesStudents.recoverData(Convert.ToInt32(strId)));
-                jsonRecoerDtes = Converter.ToJson(students);
+                var datasStudent = tablesStudent.datasStudent(Convert.ToInt32(strIdStudent));                
+                jsonRecoerDtes = Converter.ToJson(datasStudent).ToString();
             }
             return jsonRecoerDtes;
         }

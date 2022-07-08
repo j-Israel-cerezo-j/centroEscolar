@@ -10,11 +10,15 @@
             for (var i = 0; i < json.length; i++) {
                 document.getElementById("nombres").value = json[i].nombres;
                 document.getElementById("apellidoP").value = json[i].apellidoP;
-                document.getElementById("apellidoM").value = json[i].apellidoM;
-                document.getElementById("curp").value = json[i].curp;
-                document.getElementById("email").value = json[i].correo;
+                document.getElementById("apellidoM").value = json[i].apellidoM;                
+                document.getElementById("email").value = json[i].correoP;
                 document.getElementById("tel").value = json[i].telefono;
-                document.getElementById("save").value = json[i].id;
+                document.getElementById("save").value = json[i].idAlumno;
+
+                document.getElementById("idDomicilie").value = json[i].idDomicilio;
+                document.getElementById("nomCalle").value = json[i].calle;
+                document.getElementById("noInterior").value = json[i].noExterior;
+                document.getElementById("noExterior").value = json[i].noInterior;                
             }
             break;
         case 'grupos':

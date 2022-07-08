@@ -1,20 +1,28 @@
-﻿function recoverDataTableXdivisi(id) {
+﻿function updateStatusAndAddCandidate(idStatus, idCandidate) {
     Swal.fire({
         title: 'Cargando...',
         showConfirmButton: false
     })
+    var formData = new FormData(document.getElementById("form1"));
     var f = $(this);
     $.ajax({
-        url: "Handlers/tableCandidatesByDivisHandler.aspx?id=" + id,
+        url: "Handlers/manageStatusCandidatesAlumHandler.aspx?idStatus=" + idStatus + "&idCandidate=" + idCandidate,
         type: "post",
         dataType: "json",
+        data: formData,
         cache: false,
         contentType: false,
         processData: false,
         success: function (resultado) {
             swal.close()
-            if (resultado.success) {                
-                buildTableCandidates(resultado.data.recoverDates, resultado.data.jsonStatusCandidates);
+            if (resultado.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'El estatus del candidato se ha cambiado.',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                buildTableCandidates(resultado.data.jsonCandidates, resultado.data.jsonStatusCandidates);
             }
             else {
                 if (resultado.error == undefined) {
@@ -36,7 +44,8 @@
             }
         },
         error: function (xhr, error, code) {
-            alert("error");
+            console.log(error);
+            console.log(code);
             Swal.fire({
                 icon: 'error',
                 confirmButtonColor: '#572364',

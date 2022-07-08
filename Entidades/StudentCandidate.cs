@@ -12,6 +12,7 @@ namespace Entidades
     {
         public int idCandidato { get; set; }            
         public int fkIdDivision { get; set; }
+        public string fkIdStatus{ get; set; }
         public StudentCandidate()
         {
 
@@ -20,6 +21,7 @@ namespace Entidades
         {
             this.idCandidato = (int)(Validation.getValue(renglon, "idCandidato") ?? 0);            
             this.fkIdDivision = (int)(Validation.getValue(renglon, "fkIdDivision") ?? 0);
+            this.fkIdStatus = (string)Validation.getValue(renglon, "fkIdStatus");
         }
 
         override
@@ -28,12 +30,13 @@ namespace Entidades
             return
                "id:'" + idCandidato + "', " +
                "matricula: '" + matricula + "', " +
-               "nombres: '" + nombre + "', " +
+               "nombres: '" + nombres + "', " +
                "apellidoP: '" + apellidoP + "', " +
                "apellidoM: '" + apellidoM + "', " +
                "curp: '" + curp + "', " +
                "pass: '" + pass + "', " +
                "correoP: '" + correoP + "', " +
+                "fkIdStatus: '" + fkIdStatus + "', " +
                "correoIns: '" + correoIns + "', " +
                "fechaNac: '" + fechaNac.ToString("yyyy-MM-dd") + "', " +               
                "fkIdDivision: '" + fkIdDivision.ToString() + "', " +
@@ -44,7 +47,7 @@ namespace Entidades
             return
                 idCandidato + "," +
                 matricula + "," +
-                nombre + "," +
+                nombres + "," +
                 apellidoP + "," +
                 apellidoM + "," +
                 curp + "," +

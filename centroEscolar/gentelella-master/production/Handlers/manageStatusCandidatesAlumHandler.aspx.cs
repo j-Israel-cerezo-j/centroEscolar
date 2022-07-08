@@ -5,15 +5,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using CapaLogicaNegocio;
+using CapaLogicaNegocio.Exceptions;
 using Entidades;
 using Newtonsoft.Json;
-using CapaLogicaNegocio.Exceptions;
 namespace centroEscolar.gentelella_master.production.Handlers
 {
-    public partial class tableCandidatesByDivisHandler : System.Web.UI.Page
+    public partial class manageStatusCandidatesAlumHandler : System.Web.UI.Page
     {
-        private StudentCandidateService studentCandidateService = new StudentCandidateService();
+        private UserService userService = new UserService();
         public string getJsonResponse { get; private set; } = "{\"k\":1}";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             recoverData();
@@ -21,25 +22,31 @@ namespace centroEscolar.gentelella_master.production.Handlers
         private void recoverData()
         {
             Response response = new Response();
-            string strId = Request.QueryString["id"];
-            if (strId != "")
+            string strIdStatus = Request.QueryString["idStatus"];
+            string strIdCandidate = Request.QueryString["idCandidate"];            
+            if (strIdStatus != "" && strIdCandidate != "")
             {
                 try
                 {
-                    var json = studentCandidateService.jsonCandidatesByIDdiv(strId);
-                    if (json != "")
+                    var success = userService.manageStatusCandidate(strIdStatus, strIdCandidate);
+                    if (success)
                     {
-                        var jsonStatusCandidates = studentCandidateService.jsonStatusCandidate();
-                        response.success = true;
+                        var table = userService.jsonCandidates();
+                        var jsonStatusCandidates = userService.jsonStatusCandidate();
+                        response.success = success;
                         var data = new Dictionary<string, Object>();
-                        data.Add("recoverDates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(json));
+                        data.Add("jsonCandidates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(table));
                         data.Add("jsonStatusCandidates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(jsonStatusCandidates));
                         response.data = data;
-                    }                   
+                    }
+                    else
+                    {
+                        response.error = "Error en el servidor.";
+                    }
                 }
-                catch (Exception e)
+                catch (ServiceException ex)
                 {
-                    response.error = "¡Error inesperado en el servidor!";
+                    response.error = ex.getMessage();
                 }
             }
             else
@@ -49,5 +56,6 @@ namespace centroEscolar.gentelella_master.production.Handlers
             }
             getJsonResponse = JsonConvert.SerializeObject(response);
         }
+
     }
 }

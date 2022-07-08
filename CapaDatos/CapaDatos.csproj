@@ -53,6 +53,7 @@
     <Compile Include="DatosLevel.cs" />
     <Compile Include="DatosPeriod.cs" />
     <Compile Include="DatosRoles.cs" />
+    <Compile Include="DatosStatusCandidate.cs" />
     <Compile Include="DatosStudent.cs" />
     <Compile Include="DatosStudentCandidate.cs" />
     <Compile Include="DatosSubjects.cs" />

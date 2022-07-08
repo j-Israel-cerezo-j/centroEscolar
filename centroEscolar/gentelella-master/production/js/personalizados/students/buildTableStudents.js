@@ -18,6 +18,7 @@
                       <table class="table table-striped jambo_table bulk_action" id="tbl-roles">
                         <thead>
                           <tr class="headings">
+                            <th class="column-title no-link last" style="display: table-cell;"><span class="nobr">Modificar</span>
                             <th>
                               <div class="icheckbox_flat-green" style="position: relative;">
                                 <input type="checkbox" id="check-all" class="flat" style="position: absolute; opacity: 0;">
@@ -28,9 +29,11 @@
                             <th class="column-title" style="display: table-cell;">Nombre(s)</th>
                             <th class="column-title" style="display: table-cell;">Apellidos</th>
                             <th class="column-title" style="display: table-cell;">Curp</th>
-                            <th class="column-title" style="display: table-cell;">Correo</th>
+                            <th class="column-title" style="display: table-cell;">Correo personal</th>
+                            <th class="column-title" style="display: table-cell;">Correo institucional.</th>
                             <th class="column-title" style="display: table-cell;">Teléfono</th>                            
-                            <th class="column-title no-link last" style="display: table-cell;"><span class="nobr">Modificar</span>
+                            <th class="column-title" style="display: table-cell;">División</th>
+                            <th class="column-title" style="display: table-cell;">Carrera</th>
                             </th>
                             <th class="bulk-actions" colspan="7" style="display: none;">
                               <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt">1 Records Selected</span> ) <i class="fa fa-chevron-down"></i></a>
@@ -42,19 +45,22 @@
         ban = true;
         html +=
             `<tr class="even pointer">
-                                    <td class="a-center ">
-                                        <div class="icheckbox_flat-green" style="position: relative;">
-                                            <input type="checkbox" value="${json[i].id}" id="cheksa${json[i].id}" class="flat" name="table_records" style="position: absolute; opacity: 0;">
-                                        </div>
-                                    </td>
-                                    <td class=" ">${cont++}</td>`
+                <td class="last"> <button id="${json[i].idAlumno}" type="button" onclick="recoverDataa(event)" class="btn btn-success">Recuperar datos</button></td >
+                <td class="a-center ">
+                    <div class="icheckbox_flat-green" style="position: relative;">
+                        <input type="checkbox" value="${json[i].idAlumno}" id="cheksa${json[i].idAlumno}" class="flat" name="table_records" style="position: absolute; opacity: 0;">
+                    </div>
+                </td>
+                <td class=" ">${cont++}</td>`
         html += ` <td class=" ">${json[i].matricula}</td>`
         html += ` <td class=" ">${json[i].nombres}</td>`
         html += ` <td class=" ">${json[i].apellidoP} ${json[i].apellidoM}</td>`
         html += ` <td class=" ">${json[i].curp}</td>`
-        html += ` <td class=" ">${json[i].correo}</td>`
-        html += ` <td class=" ">${json[i].telefono}</td>`        
-        html += `<td class="last"><button id="${json[i].id}" type="button" onclick="recoverDataa(event)" class="btn btn-success">Modificar</button></td>`
+        html += ` <td class=" ">${json[i].correoP}</td>`
+        html += ` <td class=" ">${json[i].correoIns}</td>`
+        html += ` <td class=" ">${json[i].telefono}</td>`
+        html += ` <td class=" ">${json[i].division}</td>`
+        html += ` <td class=" ">${json[i].carrera}</td>`
         html += `
                                 </tr> `
     }

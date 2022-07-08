@@ -33,7 +33,7 @@ namespace CapaDatos
                 Comando.Parameters.Add(new SqlParameter("@matricula", SqlDbType.VarChar, 30));
                 Comando.Parameters["@matricula"].Value = studentCandidate.matricula;
                 Comando.Parameters.Add(new SqlParameter("@nombres", SqlDbType.VarChar, 40));
-                Comando.Parameters["@nombres"].Value = studentCandidate.nombre;
+                Comando.Parameters["@nombres"].Value = studentCandidate.nombres;
                 Comando.Parameters.Add(new SqlParameter("@apellidoP", SqlDbType.VarChar, 20));
                 Comando.Parameters["@apellidoP"].Value = studentCandidate.apellidoP;
                 Comando.Parameters.Add(new SqlParameter("@apellidoM", SqlDbType.VarChar, 20));
@@ -52,6 +52,9 @@ namespace CapaDatos
                 Comando.Parameters["@fechaNac"].Value = studentCandidate.fechaNac;
                 Comando.Parameters.Add(new SqlParameter("@fkIdDivision", SqlDbType.Int));
                 Comando.Parameters["@fkIdDivision"].Value = studentCandidate.fkIdDivision;
+                Comando.Parameters.Add(new SqlParameter("@fkStatus", SqlDbType.VarChar,10));
+                Comando.Parameters["@fkStatus"].Value = studentCandidate.fkIdStatus;
+                
                 Conexion.Open();
                 idRecuperado = (int)Comando.ExecuteScalar();
             }

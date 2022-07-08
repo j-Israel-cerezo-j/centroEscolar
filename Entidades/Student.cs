@@ -29,7 +29,7 @@ namespace Entidades
             return
                 "id:'" + idAlumno + "', " +
                 "matricula: '" + matricula + "', " +
-                "nombres: '" + nombre + "', " +
+                "nombres: '" + nombres + "', " +
                 "apellidoP: '" + apellidoP + "', " +
                 "apellidoM: '" + apellidoM + "', " +
                 "curp: '" + curp + "', " +
@@ -46,7 +46,7 @@ namespace Entidades
             return
                 idAlumno + "," +
                 matricula + "," +
-                nombre + "," +
+                nombres + "," +
                 apellidoP + "," +
                 apellidoM + "," +
                 curp + "," +

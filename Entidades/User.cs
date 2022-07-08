@@ -11,7 +11,7 @@ namespace Entidades
     public  class User
     {
         public string matricula { get; set; }
-        public string nombre { get; set; }
+        public string nombres { get; set; }
         public string apellidoP { get; set; }
         public string apellidoM { get; set; }
         public string curp { get; set; }
@@ -20,6 +20,7 @@ namespace Entidades
         public string correoP { get; set; }
         public string telefono { get; set; }
         public DateTime fechaNac { get; set; }
+        public int fkDomicilio { get; set; }
         public User()
         {
 
@@ -27,7 +28,7 @@ namespace Entidades
         public User(SqlDataReader renglon)
         {            
             this.matricula = (string)Validation.getValue(renglon, "matricula");
-            this.nombre = (string)Validation.getValue(renglon, "nombres");
+            this.nombres = (string)Validation.getValue(renglon, "nombres");
             this.apellidoP = (string)Validation.getValue(renglon, "apellidoP");
             this.apellidoM = (string)Validation.getValue(renglon, "apellidoM");
             this.curp = (string)Validation.getValue(renglon, "curp");
@@ -36,6 +37,7 @@ namespace Entidades
             this.correoIns = (string)Validation.getValue(renglon, "correoIns");
             this.telefono = (string)Validation.getValue(renglon, "telefono");
             this.fechaNac = (DateTime)(Validation.getValue(renglon, "fechaNac")?? new DateTime());
+            this.fkDomicilio = (int)(Validation.getValue(renglon, "fkDomicilio") ?? 0);
         }
     }
 }

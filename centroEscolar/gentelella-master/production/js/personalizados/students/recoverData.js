@@ -1,7 +1,5 @@
 ﻿function recoverDataa(event) {
-    var id = event.target.attributes.id.value;
-    $("#ctrl-principal").css('display', 'none');
-    $("#ctrl-update").css('display', 'block');
+    var id = event.target.attributes.id.value;   
     recoverData("recoverData", id);
 
 }

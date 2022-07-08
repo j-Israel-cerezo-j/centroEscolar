@@ -56,15 +56,16 @@
 								</div>
 							</div>		
 						<%-- Tabla Final--%>
-						<input type="hidden" name="catalogo" value="alumnos" />
 					</form>
 				</div>
 			</div>		
 		</div>		 
 	</div>
-	 <script src="js/personalizados/candidates/ajax/recoverDataTableCandidatesXdivis.js"></script>
-    <script src="js/personalizados/candidates/tableXdivsion.js"></script>
-    <script src="js/personalizados/candidates/buildTableCandidates.js"></script>
+	<script src="js/personalizados/candidates/ajax/recoverDataTableCandidatesXdivis.js"></script>
+    <script src="js/personalizados/candidates/ajax/manageStatusCandidate.js"></script>
+    <script src="js/personalizados/candidates/tableXdivsion.js"></script>    
+    <script src="js/personalizados/candidates/changeStatus.js"></script>    
+	<script src="js/personalizados/candidates/buildTableCandidates.js"></script>
 
     <script src="js/personalizados/preRegisterStudent/buildDivisionsInSelect.js"></script>
     <script src="js/personalizados/preRegisterStudent/divisionesXcarrera.js"></script>
@@ -76,9 +77,10 @@
     <script src="js/personalizados/utils/validatorForm.js"></script>    
                
 	<script type="text/javascript">
-        window.onload = function () {
-            const json =<%=getJsonStudents%>
-            buildTableCandidates(json);
+		window.onload = function () {
+			const json =<%=getJsonStudents%>
+			const listStatusCandidates=<%=getStatusCandidates%>
+                buildTableCandidates(json, listStatusCandidates);
             $('#tbl-roles input[type=checkbox]').iCheck({
                 checkboxClass: 'icheckbox_flat-green',
                 handle: 'checkbox'

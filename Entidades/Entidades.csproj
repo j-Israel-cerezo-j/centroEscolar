@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Rol.cs" />
+    <Compile Include="StatusCandidate.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="StudentCandidate.cs" />
     <Compile Include="Subject.cs" />

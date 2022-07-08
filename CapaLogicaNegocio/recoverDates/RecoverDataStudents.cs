@@ -15,5 +15,9 @@ namespace CapaLogicaNegocio.recoverDates
         {
             return datos.recoverData(id);
         }
+        public Student recoverDataByMatricula(string matricula)
+        {
+            return datos.recoverDataByMatricula(matricula);
+        }
     }
 }

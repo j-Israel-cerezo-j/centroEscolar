@@ -17,8 +17,7 @@ using CapaLogicaNegocio.validateDuplicateField;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
 using CapaLogicaNegocio.tablesInner;
-using System.Data;
-using System.Data.SqlClient;
+
 
 namespace CapaLogicaNegocio
 {
@@ -27,6 +26,7 @@ namespace CapaLogicaNegocio
         private TableCandidates tableCandidates = new TableCandidates();
         private AddDomicilie addDomicilie = new AddDomicilie();
         private AddStudentCandidate addStudentCandidate = new AddStudentCandidate();
+        private ListStatusCandiadate listStatusCandi = new ListStatusCandiadate();
         public string add(Dictionary<string, string> submit)
         {
             string jsonStudentCandidate = "";
@@ -78,6 +78,12 @@ namespace CapaLogicaNegocio
             domicilie.calle = RetrieveAtributesValues.retrieveAtributesValues(submit, "nomcalle");
             domicilie.noInterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noInterior");
             domicilie.noExterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noExterior");
+
+            domicilie.estado = RetrieveAtributesValues.retrieveAtributesValues(submit, "state");
+            domicilie.municipio = RetrieveAtributesValues.retrieveAtributesValues(submit, "municipio");
+            domicilie.cp = RetrieveAtributesValues.retrieveAtributesValues(submit, "cp");
+            domicilie.colonia = RetrieveAtributesValues.retrieveAtributesValues(submit, "colonia");
+
             domicilie.fkAlumno = idStudentCandidateAdd;
             return domicilie;
         }     
@@ -88,7 +94,28 @@ namespace CapaLogicaNegocio
             string strTelefono = RetrieveAtributesValues.retrieveAtributesValues(form, "tel");
             string strEmailPerson = RetrieveAtributesValues.retrieveAtributesValues(form, "email");
 
-            if (!Validation.Select(fkDivision))
+            string strEstado = RetrieveAtributesValues.retrieveAtributesValues(form, "state");
+            string strMunicipio = RetrieveAtributesValues.retrieveAtributesValues(form, "municipio");
+            string strCP = RetrieveAtributesValues.retrieveAtributesValues(form, "cp");
+            string strColonia = RetrieveAtributesValues.retrieveAtributesValues(form, "colonia");
+
+            if (!Validation.Select(strEstado))
+            {
+                throw new ServiceException("Formato no correcto en el estado");
+            }
+            else if (!Validation.Select(strMunicipio))
+            {
+                throw new ServiceException("Formato no correcto sobre municipio");
+            }
+            else if (!Validation.Select(strCP))
+            {
+                throw new ServiceException("Formato no correcto sobre CP");
+            }
+            else if (!Validation.Select(strColonia))
+            {
+                throw new ServiceException("Formato no correcto sobre la colonia");
+            }
+            else if (!Validation.Select(fkDivision))
             {
                 throw new ServiceException("Formato no correcto sobre divisiones");
             }
@@ -116,7 +143,7 @@ namespace CapaLogicaNegocio
         {
             //fechaNac
             StudentCandidate studentCandidate = new StudentCandidate();
-            studentCandidate.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "nombres");
+            studentCandidate.nombres = RetrieveAtributesValues.retrieveAtributesValues(submit, "nombres");
             studentCandidate.apellidoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoP");
             studentCandidate.apellidoM = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoM");
             studentCandidate.curp = RetrieveAtributesValues.retrieveAtributesValues(submit, "curp");
@@ -129,6 +156,7 @@ namespace CapaLogicaNegocio
                                             RetrieveAtributesValues.retrieveAtributesValues(submit, "divisiones"));
             studentCandidate.telefono = RetrieveAtributesValues.retrieveAtributesValues(submit, "tel");
             studentCandidate.correoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "email");
+            studentCandidate.fkIdStatus = "NoAprobado";
             return studentCandidate;
         }
 
@@ -136,6 +164,11 @@ namespace CapaLogicaNegocio
         {
             var TableCandidates = tableCandidates.tableCandidates();
             return Converter.ToJson(TableCandidates);
+        }
+        public string jsonStatusCandidate()
+        {
+            var statusCandidates= listStatusCandi.listarStatusCandidate();
+            return Converter.ToJson(statusCandidates);
         }
         public string jsonCandidatesByIDdiv(string strId)
         {

@@ -12,12 +12,18 @@ namespace centroEscolar.gentelella_master.production
     {
         private StudentCandidateService studentService = new StudentCandidateService();
         public List<Carrer> getCarrers { get; set; }
-        private DivisionService divisionSer = new DivisionService();
+        public string getStatusCandidates { get; set; }
+        private DivisionService divisionSer = new DivisionService();        
         public string getJsonStudents { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             jsonStudents();
-            listCarrers();            
+            listCarrers();
+            listStatusCandidates();
+        }
+        private void listStatusCandidates()
+        {
+            getStatusCandidates= studentService.jsonStatusCandidate();
         }
         private void jsonStudents()
         {

@@ -1,4 +1,4 @@
-﻿function buildTableCandidates(json) {
+﻿function buildTableCandidates(json, listStatusCandidates) {
     document.getElementById("containerTableCandidates").innerHTML = "";
     var ban = false;
     var cont = 1;
@@ -17,9 +17,10 @@
                     <div class="table-responsive">
                       <table class="table table-striped jambo_table bulk_action" id="tbl-roles">
                         <thead>
-                          <tr class="headings">                            
-                            <th class="column-title" style="display: table-cell;">Estatus </th>
+                          <tr class="headings">
                             <th class="column-title" style="display: table-cell;">No. </th>
+                            <th class="column-title" style="display: table-cell;">Acción </th>
+                            <th class="column-title" style="display: table-cell;">Estatus </th>
                             <th class="column-title" style="display: table-cell;">Matricula</th>
                             <th class="column-title" style="display: table-cell;">Nombre(s)</th>
                             <th class="column-title" style="display: table-cell;">Apellidos</th>
@@ -38,19 +39,22 @@
                         <tbody>`;
     for (var i = 0; i < json.length; i++) {
         ban = true;
-        html +=
-            `<tr class="even pointer">
+        html += `
+            <tr class="even pointer">
+                <td class=" ">${cont++}</td>
                 <td class="last">
                     <div class="input-group-btn show">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Action <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu">                                                        
-                            <li><a class="dropdown-item" href="#">No aprobado</a></li>
-                            <li><a class="dropdown-item" href="#">Aprobado</a></li>
-                        </ul>
+                        <ul class="dropdown-menu"> `
+        for (var j = 0; j < listStatusCandidates.length; j++) {
+            html += ` <li id="status` + listStatusCandidates[j].id + `" data-id-candidate="${json[i].idCandidato}" data-value="` + listStatusCandidates[j].id +`" class="dropdown-item" onclick="changeStaatus(event)">` + listStatusCandidates[j].descripcion +`</li> `
+        }                         
+        html += ` </ul>
                     </div>
                 </td >
-                <td class=" ">${cont++}</td>`
+                `
+        html += ` <td class=" ">${json[i].descripStatus}</td>`
         html += ` <td class=" ">${json[i].matricula}</td>`
         html += ` <td class=" ">${json[i].nombres}</td>`
         html += ` <td class=" ">${json[i].apellidoP} ${json[i].apellidoM}</td>`

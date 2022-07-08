@@ -14,5 +14,9 @@ namespace CapaLogicaNegocio.deletes
         {
             return datos.eliminarStudent(strIds);
         }
+        public bool deleteByMatricula(string matricula)
+        {
+            return datos.eliminarStudentByMatricula(matricula);
+        }
     }
 }

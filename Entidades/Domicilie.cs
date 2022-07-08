@@ -14,6 +14,10 @@ namespace Entidades
         public string noInterior { get; set; }
         public string noExterior { get; set; }
         public int fkAlumno { get; set; }
+        public string estado { get; set; }
+        public string municipio { get; set; }
+        public string cp { get; set; }
+        public string colonia { get; set; }
         public Domicilie()
         {
 
@@ -25,16 +29,24 @@ namespace Entidades
             this.noInterior = (string)Validation.getValue(renglon, "noInterior");
             this.noExterior = (string)Validation.getValue(renglon, "noExterior");
             this.fkAlumno = (int)(Validation.getValue(renglon, "fkAlumno") ?? 0);
+            this.estado = (string)Validation.getValue(renglon, "estado");
+            this.municipio = (string)Validation.getValue(renglon, "municipio");
+            this.cp = (string)Validation.getValue(renglon, "cp");
+            this.colonia = (string)Validation.getValue(renglon, "colonia");
         }
         override
        public string ToString()
         {
             return
-               "id:'" + idDomicilio + "', " +
-               "calle: '" + calle + "', " +
-               "noInterior: '" + noInterior + "', " +
-               "noInterior: '" + noInterior + "', " +
-               "fkAlumno: '" + fkAlumno + "' ";               
+                "id:'" + idDomicilio + "', " +
+                "calle: '" + calle + "', " +
+                "noInterior: '" + noInterior + "', " +
+                "estado: '" + estado + "', " +
+                "municipio: '" + municipio + "', " +
+                "cp: '" + cp + "', " +
+                "colonia: '" + colonia + "', " +
+                "noExterior: '" + noExterior + "', " +
+                "fkAlumno: '" + fkAlumno + "' ";               
         }
 
     }
