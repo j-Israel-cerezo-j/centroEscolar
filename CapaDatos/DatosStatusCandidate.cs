@@ -51,30 +51,24 @@ namespace CapaDatos
             }
             return status;
         }
-        public StudentCandidate updateStatusCandidate(StudentCandidate studentCandidate)
-        {
-
-            SqlDataReader renglon;
-            StudentCandidate candidate = null;
-          
+        public bool updateStatusCandidate(StudentCandidate studentCandidate)
+        {            
+            bool ban = false;
             try
             {
                 Comando.CommandType = CommandType.StoredProcedure;
                 Comando.CommandText = "pro_updateStatusCandidate";
-
                 Comando.Parameters.Add(new SqlParameter("@idCandidato", SqlDbType.Int));
-                Comando.Parameters["@idCandidato"].Value = studentCandidate.idCandidato;
+                Comando.Parameters["@idCandidato"].Value = studentCandidate.id;
                 Comando.Parameters.Add(new SqlParameter("@status", SqlDbType.VarChar, 10));
                 Comando.Parameters["@status"].Value = studentCandidate.fkIdStatus;
                 Conexion.Open();
-                renglon = Comando.ExecuteReader();
-                if (renglon.Read())
-                {
-                    candidate = new StudentCandidate(renglon);
-                }
+                Comando.ExecuteNonQuery();
+                ban = true;               
             }
             catch (SqlException e)
-            {                
+            {
+                ban = false;
                 throw new Exception(e.Message);
             }
             finally
@@ -85,7 +79,7 @@ namespace CapaDatos
                 }
                 Comando.Parameters.Clear();
             }
-            return candidate;
+            return ban;
         }
         public StudentCandidate recoverData(int id)
         {

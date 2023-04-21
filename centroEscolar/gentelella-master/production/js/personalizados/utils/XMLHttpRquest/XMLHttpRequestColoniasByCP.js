@@ -3,7 +3,7 @@
     var xhr = new XMLHttpRequest(); //invocar nueva instancia de XMLHttpRequest
     xhr.onload = exito; // llamar a la funcion exito si exitosa
     xhr.onerror = error;  // llamar a la funcion error si fallida
-    xhr.open('GET', 'https://api.copomex.com/query/get_colonia_por_cp/' + cp + '?token=f1378665-ce1e-451f-b011-2f340b03c6aa'); // Abrir solicitud GET
+    xhr.open('GET', 'https://apis.forcsec.com/api/codigos-postales/20220708-8385c4c5f040d1f7/72310'); // Abrir solicitud GET
     xhr.send()
     // funcion para cuando la llamada es exitosa
     function exito() {

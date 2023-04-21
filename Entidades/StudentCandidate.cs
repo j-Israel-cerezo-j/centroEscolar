@@ -9,8 +9,7 @@ using Validaciones.util;
 namespace Entidades
 {
     public class StudentCandidate : User
-    {
-        public int idCandidato { get; set; }            
+    {                  
         public int fkIdDivision { get; set; }
         public string fkIdStatus{ get; set; }
         public StudentCandidate()
@@ -18,8 +17,7 @@ namespace Entidades
 
         }
         public StudentCandidate(SqlDataReader renglon):base(renglon)
-        {
-            this.idCandidato = (int)(Validation.getValue(renglon, "idCandidato") ?? 0);            
+        {            
             this.fkIdDivision = (int)(Validation.getValue(renglon, "fkIdDivision") ?? 0);
             this.fkIdStatus = (string)Validation.getValue(renglon, "fkIdStatus");
         }
@@ -28,7 +26,7 @@ namespace Entidades
         public string ToString()
         {
             return
-               "id:'" + idCandidato + "', " +
+               "id:'" + id + "', " +
                "matricula: '" + matricula + "', " +
                "nombres: '" + nombres + "', " +
                "apellidoP: '" + apellidoP + "', " +
@@ -38,6 +36,7 @@ namespace Entidades
                "correoP: '" + correoP + "', " +
                 "fkIdStatus: '" + fkIdStatus + "', " +
                "correoIns: '" + correoIns + "', " +
+               "fkAddress: '" + fkAddress + "', " +
                "fechaNac: '" + fechaNac.ToString("yyyy-MM-dd") + "', " +               
                "fkIdDivision: '" + fkIdDivision.ToString() + "', " +
                "telefono: '" + telefono + "'";
@@ -45,7 +44,7 @@ namespace Entidades
         public string toString()
         {
             return
-                idCandidato + "," +
+                id + "," +
                 matricula + "," +
                 nombres + "," +
                 apellidoP + "," +
@@ -54,10 +53,10 @@ namespace Entidades
                 pass + "," +
                 correoP + "," +
                 correoIns + "," +
+                fkAddress + "," +
                 fechaNac.ToString("yyyy-MM-dd") + "," +
                 fkIdDivision + "," +
                 telefono + "'";
-
         }
 
     }

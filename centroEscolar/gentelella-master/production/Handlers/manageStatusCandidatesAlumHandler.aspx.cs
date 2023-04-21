@@ -6,21 +6,35 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using CapaLogicaNegocio;
 using CapaLogicaNegocio.Exceptions;
+using centroEscolar.gentelella_master.production.messagesErrors;
 using Entidades;
 using Newtonsoft.Json;
 namespace centroEscolar.gentelella_master.production.Handlers
 {
     public partial class manageStatusCandidatesAlumHandler : System.Web.UI.Page
     {
-        private UserService userService = new UserService();
+        private StudentCandidateService studentCandidateService = new StudentCandidateService();
+        private StudentService studentService = new StudentService();
+        private ValidateUserStatus validateUserStatus = new ValidateUserStatus();
         public string getJsonResponse { get; private set; } = "{\"k\":1}";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            recoverData();
+            bool banUserSessionClose = false;
+            bool banUserBroked = false;
+            validateUserStatus.validateStatusUserLoggeIn(recoverData, ref banUserBroked, ref banUserSessionClose);
+            if (banUserBroked)
+            {
+                getJsonResponse = validateUserStatus.messageJsonErrorUserBrokedSessionClose(MessagesErrors.accountLockedAndLoggedOut);
+            }
+            else if (banUserSessionClose)
+            {
+                getJsonResponse = validateUserStatus.messageJsonErrorUserBrokedSessionClose(MessagesErrors.closedSession);
+            }
         }
         private void recoverData()
         {
+            var data = new Dictionary<string, Object>();
             Response response = new Response();
             string strIdStatus = Request.QueryString["idStatus"];
             string strIdCandidate = Request.QueryString["idCandidate"];            
@@ -28,16 +42,14 @@ namespace centroEscolar.gentelella_master.production.Handlers
             {
                 try
                 {
-                    var success = userService.manageStatusCandidate(strIdStatus, strIdCandidate);
+                    var success = studentService.manageStatusCandidate(strIdStatus, strIdCandidate);
                     if (success)
                     {
-                        var table = userService.jsonCandidates();
-                        var jsonStatusCandidates = userService.jsonStatusCandidate();
-                        response.success = success;
-                        var data = new Dictionary<string, Object>();
+                        var table = studentCandidateService.jsonCandidates().ToString();
+                        var jsonStatusCandidates = studentCandidateService.jsonStatusCandidate();
+                        response.success = success;                    
                         data.Add("jsonCandidates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(table));
-                        data.Add("jsonStatusCandidates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(jsonStatusCandidates));
-                        response.data = data;
+                        data.Add("jsonStatusCandidates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(jsonStatusCandidates));                       
                     }
                     else
                     {
@@ -54,6 +66,8 @@ namespace centroEscolar.gentelella_master.production.Handlers
                 response.error = "Campos vacios";
                 response.success = false;
             }
+            data.Add("footeer", "Verificar por favor");
+            response.data = data;
             getJsonResponse = JsonConvert.SerializeObject(response);
         }
 

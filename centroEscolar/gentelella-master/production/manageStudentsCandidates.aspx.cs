@@ -11,15 +11,24 @@ namespace centroEscolar.gentelella_master.production
     public partial class manageStudentsCandidates : System.Web.UI.Page
     {
         private StudentCandidateService studentService = new StudentCandidateService();
-        public List<Carrer> getCarrers { get; set; }
+        public List<Carrer> getCarrers { get; set; }      
+        private DivisionService divisionSer = new DivisionService();
         public string getStatusCandidates { get; set; }
-        private DivisionService divisionSer = new DivisionService();        
         public string getJsonStudents { get; set; }
+        public bool getExistingRecords { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            jsonStudents();
-            listCarrers();
-            listStatusCandidates();
+            if (Session["Administradorr"] != null)
+            {
+                jsonStudents();
+                listCarrers();
+                listStatusCandidates();
+                existingRecords();
+            }
+            else
+            {
+                Response.Redirect("indexUser.aspx");
+            }           
         }
         private void listStatusCandidates()
         {
@@ -32,6 +41,10 @@ namespace centroEscolar.gentelella_master.production
         private void listCarrers()
         {
             getCarrers = divisionSer.listarCarrers();
-        }        
+        }
+        private void existingRecords()
+        {
+            getExistingRecords = !(studentService.jsonCandidates().ToString() == "[]");
+        }
     }
 }

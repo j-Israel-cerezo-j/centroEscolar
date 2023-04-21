@@ -15,5 +15,9 @@ namespace CapaLogicaNegocio.recoverDates
         {
             return datos.recoverData(id);
         }
+        public Domicilie recoverDataAddress(int id)
+        {
+            return datos.recoverDataAddress(id);
+        }
     }
 }

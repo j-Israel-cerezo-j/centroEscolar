@@ -15,8 +15,16 @@ namespace centroEscolar.gentelella_master.production
         public string getJsonDivisions { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            jsonDivision();
-            listCarrers();            
+            if (Session["Administradorr"] != null)
+            {
+                jsonDivision();
+                listCarrers();
+            }
+            else
+            {
+                Response.Redirect("indexUser.aspx");
+            }
+                     
         }
         private void listCarrers()
         {

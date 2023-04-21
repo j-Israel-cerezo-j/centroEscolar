@@ -210,5 +210,34 @@ namespace CapaDatos
             }
             return ban;
         }
+        public DataTable tableDivisionsByMatchingCharacterss(string characters)
+        {
+            DataTable candidates = new DataTable();
+            SqlDataReader renglon;
+            Comando.Connection = Conexion;
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.CommandText = "pro_innerDivisionsByCharacters";
+            try
+            {
+                Comando.Parameters.Add(new SqlParameter("@characters", SqlDbType.Text));
+                Comando.Parameters["@characters"].Value = characters;
+                Conexion.Open();
+                renglon = Comando.ExecuteReader();
+                candidates.Load(renglon);
+            }
+            catch (SqlException e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if (Conexion.State == ConnectionState.Open)
+                {
+                    Conexion.Close();
+                }
+                Comando.Parameters.Clear();
+            }
+            return candidates;
+        }
     }
 }

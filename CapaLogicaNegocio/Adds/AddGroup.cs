@@ -10,9 +10,10 @@ namespace CapaLogicaNegocio.Adds
     public class AddGroup
     {
         private DatosGroup datos = new DatosGroup();
-        public bool add(Group group)
+        public int add(Group group)
         {
             return datos.add(group);
         }
+       
     }
 }

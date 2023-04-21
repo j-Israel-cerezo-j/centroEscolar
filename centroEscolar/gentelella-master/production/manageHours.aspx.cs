@@ -14,7 +14,15 @@ namespace centroEscolar.gentelella_master.production
         public string getJsonHours { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            jsonHours();
+            if (Session["Administradorr"] != null)
+            {
+                jsonHours();
+            }
+            else
+            {
+                Response.Redirect("indexUser.aspx");
+            }
+           
         }
         private void jsonHours()
         {

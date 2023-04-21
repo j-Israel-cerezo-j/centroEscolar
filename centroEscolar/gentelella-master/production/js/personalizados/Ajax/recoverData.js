@@ -6,7 +6,6 @@
     var f = $(this);
     var formData = new FormData(document.getElementById("form1"));
     formData.append('typeSubmit', type);
-
     $.ajax({
         url: "Handlers/submitHandlerCatalogos.aspx?id="+id,
         type: "post",
@@ -17,8 +16,13 @@
         processData: false,
         success: function (resultado) {
             swal.close()
-            if (resultado.success) {
-                switchCatalogosRecoverData(resultado.data.recoverDates, resultado.data.info);
+            if (resultado.success) {                
+                if (resultado.data.municipios != undefined) {
+                    switchCatalogosRecoverData(resultado.data.recoverDates, resultado.data.info, resultado.data);
+                }
+                else {
+                    switchCatalogosRecoverData(resultado.data.recoverDates, resultado.data.info);
+                }                                
             }
             else {
                 if (resultado.error == undefined) {
@@ -26,7 +30,8 @@
                         icon: 'error',
                         confirmButtonColor: '#572364',
                         title: 'Oops... ¡ Algo salio mal !',
-                        text: i
+                        text: resultado.error,
+                        footer: resultado.data.footeer
                     })
                 }
                 else {
@@ -34,7 +39,8 @@
                         icon: 'error',
                         confirmButtonColor: '#572364',
                         title: 'Oops...',
-                        text: resultado.error
+                        text: resultado.error,
+                        footer: resultado.data.footeer
                     }) 
                 }
             }

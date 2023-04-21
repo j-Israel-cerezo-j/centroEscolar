@@ -13,6 +13,8 @@ using CapaLogicaNegocio.deletes;
 using CapaLogicaNegocio.updates;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
+using CapaLogicaNegocio.MessageErrors;
+using CapaLogicaNegocio.Onkeyups;
 namespace CapaLogicaNegocio
 {
     public class SubjectService
@@ -29,7 +31,7 @@ namespace CapaLogicaNegocio
             if (camposEmptysOrNull.Count == 0)
             {
                 Subject subject = new Subject();
-                subject.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "materia"); ;
+                subject.nombre = RetrieveAtributes.values(submit, "materia"); ;
                 return addSub.add(subject);
             }
             else
@@ -68,7 +70,7 @@ namespace CapaLogicaNegocio
             {
                 Subject subject = new Subject();
                 subject.idMateria = Convert.ToInt32(strId);
-                subject.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "materia");
+                subject.nombre = RetrieveAtributes.values(submit, "materia");
                 return updateSub.update(subject);
             }
             else
@@ -86,6 +88,25 @@ namespace CapaLogicaNegocio
         public bool deleteSubjects(string strIds)
         {
             return deleteSub.delete(strIds);
+        }
+        public List<string> onkeyupSearch(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("nombre", caracteres);         
+
+            var table = Onkeyup.onkeyubSearchh(fields, "materias");
+            return Converter.ToList(table);
+
+        }
+        public StringBuilder onkeyupSearchTable(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("nombre", caracteres);
+            fields.Add("idMateria", caracteres);
+
+            var table = Onkeyup.onkeyubSearchhTable(fields, "materias");
+            return Converter.ToJson(table, "idMateria", "id");
+
         }
     }
 }

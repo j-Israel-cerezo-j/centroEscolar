@@ -1,0 +1,29 @@
+﻿.btnSuccesss {
+    background-color: #0b9624;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+   
+}
+.radiusBorder {
+    border-radius: 8px;
+}
+.btnDeletes {
+    background-color: #dc3545;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+}
+
+.btnSuccesssRegistro {
+    background-color: #0b9624;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+}

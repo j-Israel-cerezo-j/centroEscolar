@@ -25,14 +25,14 @@ namespace Entidades
         public Domicilie(SqlDataReader renglon)
         {
             this.idDomicilio = (int)(Validation.getValue(renglon, "idDomicilio") ?? 0);
-            this.calle = (string)Validation.getValue(renglon, "calle");
-            this.noInterior = (string)Validation.getValue(renglon, "noInterior");
-            this.noExterior = (string)Validation.getValue(renglon, "noExterior");
+            this.calle = (string)(Validation.getValue(renglon, "calle")) ?? "";
+            this.noInterior = (string)(Validation.getValue(renglon, "noInterior")) ?? "";
+            this.noExterior = (string)(Validation.getValue(renglon, "noExterior")) ?? "";
             this.fkAlumno = (int)(Validation.getValue(renglon, "fkAlumno") ?? 0);
-            this.estado = (string)Validation.getValue(renglon, "estado");
-            this.municipio = (string)Validation.getValue(renglon, "municipio");
-            this.cp = (string)Validation.getValue(renglon, "cp");
-            this.colonia = (string)Validation.getValue(renglon, "colonia");
+            this.estado = (string)(Validation.getValue(renglon, "estado")) ?? "";
+            this.municipio = (string)(Validation.getValue(renglon, "municipio")) ?? "";
+            this.cp = (string)(Validation.getValue(renglon, "cp")) ?? "";
+            this.colonia = (string)(Validation.getValue(renglon, "colonia"))??"";
         }
         override
        public string ToString()

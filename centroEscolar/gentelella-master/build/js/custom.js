@@ -1800,6 +1800,7 @@ function init_validator() {
     console.log('init_validator');
 
     // initialize the validator function
+    
     validator.message.date = 'Fecha invalida';
 
     // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':

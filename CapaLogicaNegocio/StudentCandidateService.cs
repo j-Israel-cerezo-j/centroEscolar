@@ -17,147 +17,88 @@ using CapaLogicaNegocio.validateDuplicateField;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
 using CapaLogicaNegocio.tablesInner;
-
+using CapaLogicaNegocio.MessageErrors;
+using System.Data;
+using CapaLogicaNegocio.Onkeyups;
+using CapaDatos.Exceptions;
 
 namespace CapaLogicaNegocio
 {
-    public class StudentCandidateService
+    public class StudentCandidateService : UserService
     {
-        private TableCandidates tableCandidates = new TableCandidates();
         private AddDomicilie addDomicilie = new AddDomicilie();
-        private AddStudentCandidate addStudentCandidate = new AddStudentCandidate();
+        private TableCandidates tableCandidates = new TableCandidates();
+        private AddStudentCandidate addSCandidate = new AddStudentCandidate();
         private ListStatusCandiadate listStatusCandi = new ListStatusCandiadate();
-        public string add(Dictionary<string, string> submit)
-        {
-            string jsonStudentCandidate = "";
-            var camposEmptysOrNull = Validation.isNullOrEmptys(submit);
-            if (camposEmptysOrNull.Count == 0)
-            {
 
-                validateAttibutres(submit);
-                StudentCandidate studentCandidate = retriveAttributesDataPerson(submit);
-                var existsEmail = DuplicateField.duplicate("correoP", studentCandidate.correoP, "studentsCantidant");
-                if (existsEmail)
-                {
-                    throw new ServiceException("Correo ya existente");
-                }else if (DuplicateField.duplicate("curp", studentCandidate.curp, "studentsCantidant"))
-                {
-                    throw new ServiceException("Curp ya existente");
-                }
-                int idStudentCandidateAdd = addStudentCandidate.add(studentCandidate);
-                Domicilie domicilie = retriveAttributesDomicilies(submit, idStudentCandidateAdd);
-                bool exito= addDomicilie.add(domicilie);
-                if (exito)
-                {
-                    return studentCandidateData(studentCandidate);
-                }
-            }
-            else
+        public StudentCandidate addCandidateStudentToStudents(Dictionary<string, string> request)
+        {
+            StudentCandidate studentCandidate = null;
+            try
             {
-                foreach (var item in camposEmptysOrNull)
+                bool exito = false;
+                validateFormantDivisions(request);
+                User user = getUserDataFromRequest(request);
+                if (user != null)
                 {
-                    if (item.Value)
+                    studentCandidate = buildStudentAndAddAddress(user, request);
+                    exito = addSCandidate.add(studentCandidate);
+                    if (!exito)
                     {
-                        throw new ServiceException("El campo " + item.Key + " esta vacío");
+                        rollbackAddress(studentCandidate.fkAddress, 0);
+                        throw new ServiceException(MessageError.AnErrorOccurredTryAgainLater);
                     }
+
                 }
             }
-            return jsonStudentCandidate;
-        }
-        public string studentCandidateData(StudentCandidate studentCandidate)
-        {
-            var studentCandidates = new Dictionary<string,string>();
-            studentCandidates.Add("matricula",studentCandidate.matricula);
-            studentCandidates.Add("correoInstitucional", studentCandidate.correoIns);
-            studentCandidates.Add("password", studentCandidate.pass);
-            return Converter.ToJson(studentCandidates);
-        }
-        private Domicilie retriveAttributesDomicilies(Dictionary<string, string> submit,int idStudentCandidateAdd)
-        {
-            Domicilie domicilie = new Domicilie();
-            domicilie.calle = RetrieveAtributesValues.retrieveAtributesValues(submit, "nomcalle");
-            domicilie.noInterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noInterior");
-            domicilie.noExterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noExterior");
-
-            domicilie.estado = RetrieveAtributesValues.retrieveAtributesValues(submit, "state");
-            domicilie.municipio = RetrieveAtributesValues.retrieveAtributesValues(submit, "municipio");
-            domicilie.cp = RetrieveAtributesValues.retrieveAtributesValues(submit, "cp");
-            domicilie.colonia = RetrieveAtributesValues.retrieveAtributesValues(submit, "colonia");
-
-            domicilie.fkAlumno = idStudentCandidateAdd;
-            return domicilie;
-        }     
-        private void validateAttibutres(Dictionary<string,string> form)
-        {
-            string strDateOfBirth = RetrieveAtributesValues.retrieveAtributesValues(form, "fechaNac");
-            string fkDivision = RetrieveAtributesValues.retrieveAtributesValues(form, "divisiones");
-            string strTelefono = RetrieveAtributesValues.retrieveAtributesValues(form, "tel");
-            string strEmailPerson = RetrieveAtributesValues.retrieveAtributesValues(form, "email");
-
-            string strEstado = RetrieveAtributesValues.retrieveAtributesValues(form, "state");
-            string strMunicipio = RetrieveAtributesValues.retrieveAtributesValues(form, "municipio");
-            string strCP = RetrieveAtributesValues.retrieveAtributesValues(form, "cp");
-            string strColonia = RetrieveAtributesValues.retrieveAtributesValues(form, "colonia");
-
-            if (!Validation.Select(strEstado))
+            catch (DaoException e)
             {
-                throw new ServiceException("Formato no correcto en el estado");
+                rollbackAddress(studentCandidate.fkAddress,0);
+                throw new ServiceException(e.getMessage());
             }
-            else if (!Validation.Select(strMunicipio))
-            {
-                throw new ServiceException("Formato no correcto sobre municipio");
-            }
-            else if (!Validation.Select(strCP))
-            {
-                throw new ServiceException("Formato no correcto sobre CP");
-            }
-            else if (!Validation.Select(strColonia))
-            {
-                throw new ServiceException("Formato no correcto sobre la colonia");
-            }
-            else if (!Validation.Select(fkDivision))
-            {
-                throw new ServiceException("Formato no correcto sobre divisiones");
-            }
-            else if (!Validation.FormantDate(strDateOfBirth))
-            {
-                throw new ServiceException("Formato no correcto en fecha de nacimiento");
-            }
-            else if (!Validation.IsEmail(strEmailPerson))
-            {
-                throw new ServiceException("Formato no correcto en correo");
-            }
-            else
-            {
-                if (!Validation.numericalFormat(strTelefono))
-                {
-                    throw new ServiceException("Formato no correcto en telefono(solo números)");
-                }
-                else if (!Validation.Long(strTelefono, 10, 10))
-                {
-                    throw new ServiceException("La longitud del telefono tiene que ser no menor a 10 y no mayor a 10");
-                }
-            }
-        }
-        private StudentCandidate retriveAttributesDataPerson(Dictionary<string, string> submit)
-        {
-            //fechaNac
-            StudentCandidate studentCandidate = new StudentCandidate();
-            studentCandidate.nombres = RetrieveAtributesValues.retrieveAtributesValues(submit, "nombres");
-            studentCandidate.apellidoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoP");
-            studentCandidate.apellidoM = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoM");
-            studentCandidate.curp = RetrieveAtributesValues.retrieveAtributesValues(submit, "curp");
-            studentCandidate.matricula = UserUtils.GenerateMatricula(studentCandidate.curp);                        
-            studentCandidate.correoIns=UserUtils.GenerateInstitutionalEmail(studentCandidate.matricula);              ;
-            studentCandidate.pass = UserUtils.GeneratePasswordUser(studentCandidate.fechaNac);
-            studentCandidate.fechaNac = Convert.ToDateTime(
-                                        RetrieveAtributesValues.retrieveAtributesValues(submit, "fechaNac"));
-            studentCandidate.fkIdDivision = Convert.ToInt32(
-                                            RetrieveAtributesValues.retrieveAtributesValues(submit, "divisiones"));
-            studentCandidate.telefono = RetrieveAtributesValues.retrieveAtributesValues(submit, "tel");
-            studentCandidate.correoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "email");
-            studentCandidate.fkIdStatus = "NoAprobado";
             return studentCandidate;
+        }
+        public string candidateData_EMAILINS_PASSWORD_MATRICULA(StudentCandidate candidate)
+        {
+            string jsonDatasCandidate = "";
+            if (candidate != null)
+            {
+                jsonDatasCandidate = "" +
+                    "{" +
+                        "matricula:'"+candidate.matricula+"'," +
+                        "correoIns:'"+candidate.correoIns+"'," +
+                        "pass:'"+candidate.fechaNac+"'" +
+                    "}";
+            }
+            return jsonDatasCandidate;
+        }
+        private StudentCandidate buildStudentAndAddAddress(User user, Dictionary<string, string> request)
+        {
+
+            StudentCandidate studentCandidate = buildUser(user, new StudentCandidate());
+            studentCandidate.fkIdStatus = "NoAprobado";
+            studentCandidate.fkIdDivision = Convert.ToInt32(
+                                            RetrieveAtributes.values(request, "divisiones"));
+            Domicilie domicilie = getDomicilieDataFromRequest(request);
+            int idNewAddress = addDomicilie.addAddres(domicilie);
+            if (idNewAddress == 0)
+            {
+                throw new ServiceException(MessageError.AnErrorOccurredTryAgainLater);
+            }
+            studentCandidate.fkAddress = idNewAddress;
+            return studentCandidate;
+        }
+        public List<string> onkeyupSearch(string caracteres)
+        {
+            caracteres = "%" + caracteres + "%";
+            var TableCandidates = tableCandidates.tableCandidatesBymatchingCharacters(caracteres);
+            return Converter.ToList(TableCandidates);
+
+        }
+        public StringBuilder jsonCandidatesByMatchingCharacters(string characters)
+        {
+            var TableCandidates = tableCandidates.tableCandidatesBymatchingCharacters(characters);
+            return Converter.ToJson(TableCandidates);
         }
 
         public StringBuilder jsonCandidates()
@@ -173,7 +114,15 @@ namespace CapaLogicaNegocio
         public string jsonCandidatesByIDdiv(string strId)
         {
             int id=Convert.ToInt32(strId);
-            var students = tableCandidates.tableCandidatesByIDdivision(id);
+            var students = new DataTable();
+            if (id == -2)
+            {
+                students = tableCandidates.tableCandidates();
+            }
+            else
+            {
+                students = tableCandidates.tableCandidatesByIDdivision(id);
+            }            
             return Converter.ToJson(students).ToString();
         }
     }

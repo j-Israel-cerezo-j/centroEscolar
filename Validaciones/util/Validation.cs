@@ -31,14 +31,34 @@ namespace Validaciones.util
         }
         public static Dictionary<string, bool> isNullOrEmptys(Dictionary<string, string> attributes)
         {
+            char[] charsToTrim = { ' ' };
             var result = new Dictionary<string, bool>();
             foreach (var item in attributes)
-            {
-                if (String.IsNullOrEmpty(item.Value))
+            {              
+                string valueWithoutSpaces = item.Value.Trim(charsToTrim);
+                if (String.IsNullOrEmpty(valueWithoutSpaces))
                 {
                     result.Add(item.Key, true);
                     break;
                 }
+            }
+            return result;
+        }
+        public static bool isNullOrEmpty(Dictionary<string, string> request,string field)
+        {
+            char[] charsToTrim = { ' ' };
+            var result = false;
+            foreach (var item in request)
+            {
+                string valueWithoutSpaces = item.Value.Trim(charsToTrim);
+                if (valueWithoutSpaces==field)
+                {
+                    if (String.IsNullOrEmpty(valueWithoutSpaces))
+                    {
+                        result = true;
+                        break;
+                    }
+                }                
             }
             return result;
         }
@@ -90,8 +110,12 @@ namespace Validaciones.util
         }
         public static bool Select(string select)
         {
-            bool formatoCorrectoSelect = !(select == "-1" || select == null || select == "");
+            bool formatoCorrectoSelect = !(select == "-1" || select == null || select == "" || select=="-2");
             return formatoCorrectoSelect;
+        }
+        public static bool FormantCheck(string strCheck)
+        {
+            return !(strCheck == "" || strCheck == null);
         }
     }
 }

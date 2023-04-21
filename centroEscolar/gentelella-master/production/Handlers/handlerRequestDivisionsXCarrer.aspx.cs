@@ -13,12 +13,14 @@ namespace centroEscolar.gentelella_master.production.Handlers
     {
         public string getJsonResponse { get; set; }
         private DivisionService divisionService = new DivisionService();
+        private ValidateUserStatus validateUserStatus = new ValidateUserStatus();
         protected void Page_Load(object sender, EventArgs e)
         {
             recoverData();
         }
         private void recoverData()
-        {            
+        {
+            var data = new Dictionary<string, Object>();
             Response response = new Response();            
             string strId = Request.QueryString["id"];
             if (strId != "")
@@ -28,10 +30,8 @@ namespace centroEscolar.gentelella_master.production.Handlers
                     var json = divisionService.divisionsXcarrer(strId);
                     if (json != "")
                     {
-                        response.success = true;
-                        var data = new Dictionary<string, Object>();                        
-                        data.Add("recoverDates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(json));
-                        response.data = data;
+                        response.success = true;                                             
+                        data.Add("recoverDates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(json));                        
                     }
                     else
                     {
@@ -48,6 +48,8 @@ namespace centroEscolar.gentelella_master.production.Handlers
                 response.error = "Campos vacios";
                 response.success = false;                
             }
+            data.Add("footeer", "Verificar por favor");
+            response.data = data;
             getJsonResponse = JsonConvert.SerializeObject(response);
         }
     }

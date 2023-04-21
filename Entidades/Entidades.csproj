@@ -45,20 +45,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="binderSurbey\CategoryQuestion.cs" />
+    <Compile Include="binderSurbey\Question.cs" />
+    <Compile Include="binderSurbey\QuestionAnswer.cs" />
+    <Compile Include="binderSurbey\Survey.cs" />
+    <Compile Include="binderSurbey\University.cs" />
+    <Compile Include="binderSurbey\UserSurvey.cs" />
+    <Compile Include="Building.cs" />
     <Compile Include="Carrer.cs" />
+    <Compile Include="Classroom.cs" />
     <Compile Include="Division.cs" />
     <Compile Include="Domicilie.cs" />
+    <Compile Include="GeneralEmploye.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Hour.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="LocalEmploye.cs" />
     <Compile Include="Period.cs" />
+    <Compile Include="Privilege.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="StatusCandidate.cs" />
+    <Compile Include="StatusUser.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="StudentCandidate.cs" />
     <Compile Include="Subject.cs" />
+    <Compile Include="TypeClassroom.cs" />
+    <Compile Include="TypeWorker.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,113 +5,36 @@ using System.Text;
 using System.Threading.Tasks;
 using CapaLogicaNegocio.Adds;
 using Entidades;
-using CapaLogicaNegocio.retrieveAtributesValues;
-using CapaLogicaNegocio.Lists;
 using CapaLogicaNegocio.utils;
 using CapaLogicaNegocio.recoverDates;
 using CapaLogicaNegocio.deletes;
 using CapaLogicaNegocio.updates;
 using CapaLogicaNegocio.encryptPassword;
-using Newtonsoft.Json;
 using CapaLogicaNegocio.validateDuplicateField;
-using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
 using CapaLogicaNegocio.tablesInner;
 using System.Data;
+using CapaLogicaNegocio.MessageErrors;
+using System.Web;
+using System.Data.SqlClient;
+using CapaDatos.Exceptions;
 
 namespace CapaLogicaNegocio
 {
-    public class StudentService
+    public class StudentService : UserService
     {
+        private ApiMexico apiMexico = new ApiMexico();
         private UpdateStudent updateStudents = new UpdateStudent();
         private AddStudent addStudent= new AddStudent();        
         private DeleteStudent deleteStudent = new DeleteStudent();        
         private TableStudents tablesStudent = new TableStudents();
-        private UpdateAddress updateAdddress = new UpdateAddress();
-        public bool add(Dictionary<string, string> submit) 
-        {
-            bool ban = false;
-            var camposEmptysOrNull = Validation.isNullOrEmptys(submit);
-            if (camposEmptysOrNull.Count == 0)
-            {
-                Student student = retriveAttributesSubmit(submit);
-                validateCampos(student);
-                validateDuplicateEmail(student);
-                return addStudent.add(student);
-            }
-            else
-            {
-                foreach (var item in camposEmptysOrNull)
-                {
-                    if (item.Value)
-                    {
-                        throw new ServiceException(item.Key + " esta vacío");
-                    }                  
-                }
-            }            
-            return ban;
-        }
-        private void validateCampos(Student student)
-        {
-            if (!Validation.IsEmail(student.correoP))
-            {
-                throw new ServiceException("Formato no correcto en correo");
-            }           
-            else
-            {                
-                if (!Validation.numericalFormat(student.telefono))
-                {
-                    throw new ServiceException("Formato no correcto en telefono(solo números)");
-                }else if (!Validation.Long(student.telefono, 10, 10))
-                {
-                    throw new ServiceException("La longitud del telefono tiene que ser no menor a 10 y no mayor a 10");
-                }
-            }
-        }
-        private void validateDuplicateEmail(Student student) {
+        private RecoverDataStudents recoverDataStudent = new RecoverDataStudents();
+        private RecoverDataDomicilie recoverDataAddress = new RecoverDataDomicilie();
+        private UpdateStatusCandidate updateStatusCan = new UpdateStatusCandidate();        
+        private RecoverDataStudenCandidate recoverDataStudenCandidate = new RecoverDataStudenCandidate();
+        private DeleteStudent deleteStuden = new DeleteStudent();
+        private UpdateStatusUser updateStatusUser = new UpdateStatusUser();
 
-            var existsEmail = DuplicateField.duplicate("correoP", student.correoP, "alumnos");
-            if (existsEmail)
-            {
-                var campos = new Dictionary<string, string>();
-                campos.Add("correoP", student.correoP);
-                campos.Add("idAlumno", student.idAlumno.ToString());
-
-                var existsEmailAndID = DuplicateField.duplicate(campos, "alumnos");
-                if (!existsEmailAndID)
-                {
-                    throw new ServiceException("Correo ya existente");
-                }
-            }
-        }
-        private Domicilie retriveAttributesSubmitDomicilie(Dictionary<string, string> submit)
-        {
-            Domicilie domicilie = new Domicilie();
-            domicilie.calle = RetrieveAtributesValues.retrieveAtributesValues(submit, "nomcalle");
-            domicilie.noExterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noInterior");
-            domicilie.noInterior = RetrieveAtributesValues.retrieveAtributesValues(submit, "noExterior");
-
-            domicilie.estado = RetrieveAtributesValues.retrieveAtributesValues(submit, "state");
-            domicilie.municipio = RetrieveAtributesValues.retrieveAtributesValues(submit, "municipio");
-            domicilie.cp = RetrieveAtributesValues.retrieveAtributesValues(submit, "cp");
-            domicilie.colonia = RetrieveAtributesValues.retrieveAtributesValues(submit, "colonia");
-
-
-            domicilie.idDomicilio =Convert.ToInt32(
-                                                    RetrieveAtributesValues.retrieveAtributesValues(submit, "idDomicilie"));
-            return domicilie;
-        }
-
-        private Student retriveAttributesSubmit(Dictionary<string, string> submit)
-        {
-            Student student = new Student();
-            student.nombres = RetrieveAtributesValues.retrieveAtributesValues(submit, "nombres");
-            student.apellidoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoP");
-            student.apellidoM = RetrieveAtributesValues.retrieveAtributesValues(submit, "apellidoM");
-            student.correoP = RetrieveAtributesValues.retrieveAtributesValues(submit, "email");
-            student.telefono = RetrieveAtributesValues.retrieveAtributesValues(submit, "tel");
-            return student;
-        }       
         public string jsonStudents()
         {
             DataTable table = tablesStudent.tableStudents();
@@ -120,60 +43,31 @@ namespace CapaLogicaNegocio
         public bool deleteStudents(string strIds)
         {
             return deleteStudent.delete(strIds);
-        }       
-        public bool updateStudent(Dictionary<string, string> submit, string strId)
+        }
+        public bool updateStudent(Dictionary<string, string> request, string strIdUser, HttpPostedFile file)
         {
-            bool ban = false;
-            var camposEmptysOrNull = Validation.isNullOrEmptys(submit);
-            if (camposEmptysOrNull.Count == 0)
+            bool exito = false;
+            User user = getUserDataFromRequestForUpdate(request, "alumnos", strIdUser);
+            try
             {
-                validateCamposDomicilie(submit);
-                Student student = retriveAttributesSubmit(submit);
-                student.idAlumno = Convert.ToInt32(strId);
-                Domicilie domicilie = retriveAttributesSubmitDomicilie(submit);
-                validateCampos(student);
-                validateDuplicateEmail(student);
-                bool updateExists = updateAdddress.update(domicilie);
-                if (updateExists)
+                if (user != null)
                 {
-                    return updateStudents.update(student);
-                }                
-            }
-            else
-            {
-                foreach (var item in camposEmptysOrNull)
-                {
-                    if (item.Value)
-                    {
-                        throw new ServiceException(item.Key + " esta vacío");
-                    }
+                    Student student = buildUser(user, new Student());
+                    student.id = Convert.ToInt32(strIdUser);
+                    student.image = defineImagePath(request, file, "students");
+                    student.fileName = defineTheSourceOfTheFileName(file, "fileName", "alumnos", "id", student.id.ToString());
+                    exito = updateStudents.update(student);
+
                 }
             }
-            return ban;
-        }       
-        private void validateCamposDomicilie(Dictionary<string,string> form)
-        {
-            string strEstado = RetrieveAtributesValues.retrieveAtributesValues(form, "state");
-            string strMunicipio = RetrieveAtributesValues.retrieveAtributesValues(form, "municipio");
-            string strCP = RetrieveAtributesValues.retrieveAtributesValues(form, "cp");
-            string strColonia = RetrieveAtributesValues.retrieveAtributesValues(form, "colonia");
-
-            if (!Validation.Select(strEstado))
+            catch (DaoException e)
             {
-                throw new ServiceException("Formato no correcto en el estado");
+                throw new ServiceException(MessageError.errorUpdateUser);
             }
-            else if (!Validation.Select(strMunicipio))
-            {
-                throw new ServiceException("Formato no correcto sobre municipio");
+            catch (ServiceException es) {
+                throw new ServiceException(es.getMessage());
             }
-            else if (!Validation.Select(strCP))
-            {
-                throw new ServiceException("Formato no correcto sobre CP");
-            }
-            else if (!Validation.Select(strColonia))
-            {
-                throw new ServiceException("Formato no correcto sobre la colonia");
-            }
+            return exito;          
         }
         public string jsonRecoverData(string strIdStudent)
         {
@@ -184,6 +78,75 @@ namespace CapaLogicaNegocio
                 jsonRecoerDtes = Converter.ToJson(datasStudent).ToString();
             }
             return jsonRecoerDtes;
+        }
+        public string jsonMinicipesByStateStudent(string idAlumno)
+        {
+            Student student = recoverDataStudent.recoverData(Convert.ToInt32(idAlumno));
+            if (student == null)
+            {
+                throw new ServiceException(MessageError.nonexistentStudent);
+            }
+            else
+            {
+                Domicilie domicilie = recoverDataAddress.recoverDataAddress(student.fkAddress);
+                if (domicilie == null)
+                {
+                    throw new ServiceException(MessageError.nonexistentAddress);
+                }
+                else
+                {
+                    return apiMexico.recoverDatas("municipios", domicilie.estado);
+                }                
+            }            
+        }
+        public List<string> onkeyupSearch(string caracteres)
+        {
+            caracteres = "%" + caracteres + "%";
+            var table = tablesStudent.tableStudentBymatchingCharacters(caracteres);
+            return Converter.ToList(table);
+        }
+        public StringBuilder onkeyupSearchTable(string caracteres)
+        {
+           var table= tablesStudent.tableStudentBymatchingCharacters(caracteres);
+            return Converter.ToJson(table);
+        }
+
+        public bool manageStatusCandidate(string strIdStatus, string strIdCandidate)
+        {
+            bool ban = false;
+            int idStudenCandidate = Convert.ToInt32(strIdCandidate);
+            StudentCandidate studenCandidate = recoverDataStudenCandidate.recoverDataS(idStudenCandidate);
+            studenCandidate.fkIdStatus = strIdStatus;
+
+            if (strIdStatus == "aprobado")
+            {
+                bool exists = DuplicateField.duplicate("correoIns", studenCandidate.correoIns, "alumnos");
+                if (exists)
+                {
+                    throw new ServiceException(MessageError.alreadyApprovedCandidate);
+                }                
+                Student student = buildUser(studenCandidate,new Student());
+                student.fkIdDivision= studenCandidate.fkIdDivision;
+                student.fkStatusUser = "desbloqueado";
+                ban = addStudent.add(student);                            
+            }
+            else if (strIdStatus == "NoAprobado")
+            {
+                bool exists = DuplicateField.duplicate("matricula", studenCandidate.matricula, "alumnos");
+                if (exists)
+                {                    
+                    ban = deleteStuden.deleteByMatricula(studenCandidate.matricula);
+                }               
+            }
+            if (ban)
+            {
+                ban=updateStatusCan.update(studenCandidate);
+            }
+            return ban;
+        }
+        public bool updateStatus(string fkStatus,string idStudent) 
+        {
+           return updateStatusUser.updateStatusUsers("alumnos","id", fkStatus,"fkStatusUser", idStudent);
         }
     }
 }

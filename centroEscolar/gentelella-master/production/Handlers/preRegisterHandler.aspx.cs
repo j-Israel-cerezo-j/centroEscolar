@@ -21,20 +21,19 @@ namespace centroEscolar.gentelella_master.production.Handlers
         private void requestAdd()
         {            
             Response response = new Response();
+            var data = new Dictionary<string, object>();
             string[] submit = Request.Form.AllKeys;
             var valuesSubmit = getValuesForm(submit);
             if (submit.Length > 0)
             {
                 try
                 {
-                    var success = studentCandidateService.add(valuesSubmit);
-                    if (success!="")
-                    {
+                    var newCandidateStudent = studentCandidateService.addCandidateStudentToStudents(valuesSubmit);
+                    if (newCandidateStudent!=null)
+                    {                        
                         response.success = true;
-                        string json = success;
-                        var data = new Dictionary<string, Object>();
-                        data.Add("info", json);                        
-                        response.data = data;
+                        var jsonDatasCandidate = studentCandidateService.candidateData_EMAILINS_PASSWORD_MATRICULA(newCandidateStudent);
+                        data.Add("info",JsonConvert.DeserializeObject<Dictionary<string, Object>> (jsonDatasCandidate));
                     }
                     else
                     {
@@ -51,6 +50,7 @@ namespace centroEscolar.gentelella_master.production.Handlers
                 response.error = "Campos vacios";
                 response.success = false;                
             }
+            response.data = data;
             getJsonResponse = JsonConvert.SerializeObject(response);
         }
         private Dictionary<string, string> getValuesForm(string[] submitKeys)

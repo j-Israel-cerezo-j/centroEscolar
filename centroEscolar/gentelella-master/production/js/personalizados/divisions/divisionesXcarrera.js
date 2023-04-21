@@ -1,4 +1,4 @@
 ﻿function divisionesXcarrera() {
-    var idSelectCarrera = document.getElementById("carreras").value;
+    var idSelectCarrera = document.getElementById("filterBySlc").value;
     recoverDataDivisions(idSelectCarrera);
 }

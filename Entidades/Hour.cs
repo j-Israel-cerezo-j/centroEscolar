@@ -28,8 +28,8 @@ namespace Entidades
         {
             return
                 "id:'" + idHorario + "', " +                
-                "horaInicio:'" + horaInicio.ToString("HH:MM") + "', " +
-                "horaTermino:'" + horaFinal.ToString("HH:MM") + "'";
+                "horaInicio:'" + horaInicio.ToString("HH:mm") + "'," +
+                "horaTermino:'" + horaFinal.ToString("HH:mm") + "'";
         }
     }
 }

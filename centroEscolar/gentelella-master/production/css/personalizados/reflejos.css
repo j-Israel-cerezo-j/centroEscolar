@@ -1,0 +1,12 @@
+﻿.reflejo {
+    position: relative;
+    -moz-box-shadow: 4px 4px 4px rgba(0, 0, 0,0.5);
+    -webkit-box-shadow: 4px 4px 4px rgba(0, 0, 0, .5);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, .5);
+}
+
+
+.greenMenu {
+    background: #28a745 linear-gradient(180deg,#48b461,#28a745) repeat-x!important;
+    color: #fff;
+}

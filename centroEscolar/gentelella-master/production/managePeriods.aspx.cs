@@ -14,10 +14,19 @@ namespace centroEscolar.gentelella_master.production
         public string getJsonPeriods { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            jsonPeriods();
+            if (Session["Administradorr"] != null)
+            {
+                jsonPeriods();
+            }
+            else
+            {
+                Response.Redirect("indexUser.aspx");
+            }
+         
         }
         private void jsonPeriods()
         {
+           
             getJsonPeriods = servicePeriods.jsonPeriods();
         }
     }

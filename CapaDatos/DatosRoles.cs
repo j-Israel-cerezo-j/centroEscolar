@@ -33,6 +33,8 @@ namespace CapaDatos
                 Comando.Parameters["@idRol"].Value = rol.idRol;
                 Comando.Parameters.Add(new SqlParameter("@rol", SqlDbType.VarChar, 30));
                 Comando.Parameters["@rol"].Value = rol.rol;
+                Comando.Parameters.Add(new SqlParameter("@fkTypeWorker", SqlDbType.VarChar,60));
+                Comando.Parameters["@fkTypeWorker"].Value = rol.fkTypeWorker;
                 Conexion.Open();
                 Comando.ExecuteNonQuery();
                 ban = true;
@@ -62,6 +64,8 @@ namespace CapaDatos
             {
                 Comando.Parameters.Add(new SqlParameter("@rol", SqlDbType.VarChar, 30));
                 Comando.Parameters["@rol"].Value = rol.rol;
+                Comando.Parameters.Add(new SqlParameter("@fkTypeWorker", SqlDbType.VarChar,60));
+                Comando.Parameters["@fkTypeWorker"].Value = rol.fkTypeWorker;
                 Conexion.Open();
                 Comando.ExecuteNonQuery();
                 ban = true;
@@ -172,6 +176,62 @@ namespace CapaDatos
                 Comando.Parameters.Clear();
             }
             return ban;
+        }
+        public DataTable tableRoles()
+        {
+            DataTable candidates = new DataTable();
+            SqlDataReader renglon;
+            Comando.Connection = Conexion;
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.CommandText = "pro_innerRoles";
+            try
+            {              
+                Conexion.Open();
+                renglon = Comando.ExecuteReader();
+                candidates.Load(renglon);
+            }
+            catch (SqlException e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if (Conexion.State == ConnectionState.Open)
+                {
+                    Conexion.Close();
+                }
+                Comando.Parameters.Clear();
+            }
+            return candidates;
+        }
+        public DataTable tableRolesByMatchingCharacterss(string characters)
+        {
+            DataTable candidates = new DataTable();
+            SqlDataReader renglon;
+            Comando.Connection = Conexion;
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.CommandText = "pro_innerRolesByCharacters";
+            try
+            {
+                Comando.Parameters.Add(new SqlParameter("@characters", SqlDbType.Text));
+                Comando.Parameters["@characters"].Value = characters;
+                Conexion.Open();
+                renglon = Comando.ExecuteReader();
+                candidates.Load(renglon);
+            }
+            catch (SqlException e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if (Conexion.State == ConnectionState.Open)
+                {
+                    Conexion.Close();
+                }
+                Comando.Parameters.Clear();
+            }
+            return candidates;
         }
     }
 }

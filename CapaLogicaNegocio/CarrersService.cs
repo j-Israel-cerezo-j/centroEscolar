@@ -13,6 +13,8 @@ using CapaLogicaNegocio.deletes;
 using CapaLogicaNegocio.updates;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
+using CapaLogicaNegocio.MessageErrors;
+using CapaLogicaNegocio.Onkeyups;
 namespace CapaLogicaNegocio
 {
     public class CarrersService
@@ -29,7 +31,7 @@ namespace CapaLogicaNegocio
             if (camposEmptysOrNull.Count == 0)
             {
                 Carrer carrer = new Carrer();
-                carrer.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "carrera"); ;
+                carrer.nombre = RetrieveAtributes.values(submit, "carrera"); ;
                 return addC.add(carrer);
             }
             else
@@ -68,7 +70,7 @@ namespace CapaLogicaNegocio
             {
                 Carrer carrer = new Carrer();
                 carrer.idCarrera = Convert.ToInt32(strId);
-                carrer.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "carrera");
+                carrer.nombre = RetrieveAtributes.values(submit, "carrera");
                 return updateC.update(carrer);
             }
             else
@@ -86,6 +88,25 @@ namespace CapaLogicaNegocio
         public bool deleteCarrers(string strIds)
         {
             return deleteC.delete(strIds);
+        }
+        public StringBuilder onkeyupSearchTable(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("idCarrera", caracteres);
+            fields.Add("nombre", caracteres);
+
+            var table = Onkeyup.onkeyubSearchhTable(fields, "carreras");
+            return Converter.ToJson(table, "idCarrera","id");
+
+        }
+        public List<string> onkeyupSearch(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("nombre", caracteres);          
+
+            var table = Onkeyup.onkeyubSearchh(fields, "carreras");
+            return Converter.ToList(table);
+
         }
     }
 }

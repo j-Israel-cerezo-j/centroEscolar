@@ -13,7 +13,8 @@ using CapaLogicaNegocio.deletes;
 using CapaLogicaNegocio.updates;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
-
+using CapaLogicaNegocio.MessageErrors;
+using CapaLogicaNegocio.Onkeyups;
 namespace CapaLogicaNegocio
 {
     public class LevelService
@@ -30,7 +31,7 @@ namespace CapaLogicaNegocio
             if (camposEmptysOrNull.Count == 0)
             {
                 Level level = new Level();
-                level.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "cuatrimestre"); ;
+                level.nombre = RetrieveAtributes.values(submit, "cuatrimestre"); ;
                 return addL.add(level);
             }
             else
@@ -69,7 +70,7 @@ namespace CapaLogicaNegocio
             {
                 Level level = new Level();
                 level.idCuatrimestre = Convert.ToInt32(strId);
-                level.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "cuatrimestre");
+                level.nombre = RetrieveAtributes.values(submit, "cuatrimestre");
                 return updateL.update(level);
             }
             else
@@ -87,6 +88,24 @@ namespace CapaLogicaNegocio
         public bool deleteLev(string strIds)
         {
             return deleteL.delete(strIds);
+        }
+        public List<string> onkeyupSearch(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("nombre", caracteres);         
+            var table = Onkeyup.onkeyubSearchh(fields, "cuatrimestres");
+            return Converter.ToList(table);
+
+        }
+        public StringBuilder onkeyupSearchTable(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("nombre", caracteres);
+            fields.Add("idCuatrimestre", caracteres);
+
+            var table = Onkeyup.onkeyubSearchhTable(fields, "cuatrimestres");
+            return Converter.ToJson(table, "idCuatrimestre", "id");
+
         }
     }
 }

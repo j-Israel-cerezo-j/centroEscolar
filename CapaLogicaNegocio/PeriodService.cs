@@ -13,7 +13,8 @@ using CapaLogicaNegocio.deletes;
 using CapaLogicaNegocio.updates;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
-
+using CapaLogicaNegocio.MessageErrors;
+using CapaLogicaNegocio.Onkeyups;
 namespace CapaLogicaNegocio
 {
     public class PeriodService
@@ -30,9 +31,9 @@ namespace CapaLogicaNegocio
             if (camposEmptysOrNull.Count == 0)
             {
                 Period period = new Period();
-                period.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "periodo");
-                string strStartDate = RetrieveAtributesValues.retrieveAtributesValues(submit, "fechaInicio");
-                string strEndDate = RetrieveAtributesValues.retrieveAtributesValues(submit, "fechaFinal");
+                period.nombre = RetrieveAtributes.values(submit, "periodo");
+                string strStartDate = RetrieveAtributes.values(submit, "fechaInicio");
+                string strEndDate = RetrieveAtributes.values(submit, "fechaFinal");
                 vaalidedFormantDates(strStartDate, strEndDate);
                 period.fechaInicio =Convert.ToDateTime(strStartDate);
                 period.fechaTermino =Convert.ToDateTime(strEndDate);
@@ -74,9 +75,9 @@ namespace CapaLogicaNegocio
             {
                 Period period = new Period();
                 period.idPeriodo = Convert.ToInt32(strId);
-                period.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "periodo");
-                string strStartDate = RetrieveAtributesValues.retrieveAtributesValues(submit, "fechaInicio");
-                string strEndDate = RetrieveAtributesValues.retrieveAtributesValues(submit, "fechaFinal");
+                period.nombre = RetrieveAtributes.values(submit, "periodo");
+                string strStartDate = RetrieveAtributes.values(submit, "fechaInicio");
+                string strEndDate = RetrieveAtributes.values(submit, "fechaFinal");
                 vaalidedFormantDates(strStartDate, strEndDate);
                 period.fechaInicio = Convert.ToDateTime(strStartDate);
                 period.fechaTermino = Convert.ToDateTime(strEndDate);
@@ -102,12 +103,29 @@ namespace CapaLogicaNegocio
         {
             if (!Validation.FormantDate(strStartDate))
             {
-                throw new ServiceException("Formato no correcto sobre fecha de inicio");
+                throw new ServiceException(MessageError.incorrectFormatInStartDate);
             }
             else if (!Validation.FormantDate(strEndDate))
             {
-                throw new ServiceException("Formato no correcto sobre fecha de término");
+                throw new ServiceException(MessageError.incorrectFormatInEndDate);
             }
+        }
+        public List<string> onkeyupSearch(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("nombre", caracteres);          
+            var table = Onkeyup.onkeyubSearchh(fields, "periodos");
+            return Converter.ToList(table);
+
+        }
+        public StringBuilder onkeyupSearchTable(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("nombre", caracteres);
+            fields.Add("idPeriodo", caracteres);
+            var table = Onkeyup.onkeyubSearchhTable(fields, "periodos");
+            return Converter.ToJson(table, "idPeriodo", "id");
+
         }
     }
 }

@@ -22,10 +22,10 @@ namespace CapaDatos
             Comando = new SqlCommand();
             Comando.Connection = Conexion;
         }
-        public int add(StudentCandidate studentCandidate)
+        public bool add(StudentCandidate studentCandidate)
         {
 
-            int idRecuperado = 0;
+            bool ban = false;
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.CommandText = "pro_addStudentCandidate";
             try
@@ -54,12 +54,16 @@ namespace CapaDatos
                 Comando.Parameters["@fkIdDivision"].Value = studentCandidate.fkIdDivision;
                 Comando.Parameters.Add(new SqlParameter("@fkStatus", SqlDbType.VarChar,10));
                 Comando.Parameters["@fkStatus"].Value = studentCandidate.fkIdStatus;
-                
+                Comando.Parameters.Add(new SqlParameter("@fkAddress", SqlDbType.Int));
+                Comando.Parameters["@fkAddress"].Value = studentCandidate.fkAddress;
+
                 Conexion.Open();
-                idRecuperado = (int)Comando.ExecuteScalar();
+                Comando.ExecuteNonQuery();
+                ban = true;
             }
             catch (SqlException e)
             {
+                ban = false;
                 if (e.Message.Contains("duplicate key"))
                 {
                     throw new DaoException("Campo duplicado");
@@ -73,7 +77,7 @@ namespace CapaDatos
                 }
                 Comando.Parameters.Clear();
             }
-            return idRecuperado;
+            return ban;
         }
         public List<StudentCandidate> listarStudents()
         {
@@ -143,6 +147,35 @@ namespace CapaDatos
             {
                 Comando.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                 Comando.Parameters["@id"].Value = id;
+                Conexion.Open();
+                renglon = Comando.ExecuteReader();
+                candidates.Load(renglon);
+            }
+            catch (SqlException e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if (Conexion.State == ConnectionState.Open)
+                {
+                    Conexion.Close();
+                }
+                Comando.Parameters.Clear();
+            }
+            return candidates;
+        }
+        public DataTable tableCandidatesStudentsByMatchingCharacterss(string characters)
+        {
+            DataTable candidates = new DataTable();
+            SqlDataReader renglon;
+            Comando.Connection = Conexion;
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.CommandText = "pro_innerCandidatesStudentByCharacters";
+            try
+            {
+                Comando.Parameters.Add(new SqlParameter("@characters", SqlDbType.Text));
+                Comando.Parameters["@characters"].Value = characters;
                 Conexion.Open();
                 renglon = Comando.ExecuteReader();
                 candidates.Load(renglon);

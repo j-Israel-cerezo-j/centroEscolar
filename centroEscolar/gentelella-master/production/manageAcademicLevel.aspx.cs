@@ -13,7 +13,15 @@ namespace centroEscolar.gentelella_master.production
         public string getJsonLevels { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            jsonLevels();
+            if (Session["Administradorr"] != null)
+            {
+                jsonLevels();
+            }
+            else
+            {
+                Response.Redirect("indexUser.aspx");
+            }
+           
         }
         private void jsonLevels()
         {

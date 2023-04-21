@@ -10,7 +10,7 @@ namespace CapaLogicaNegocio.updates
     public class UpdateStatusCandidate
     {
         private DatosStatusCandidate datos = new DatosStatusCandidate();
-        public StudentCandidate update(StudentCandidate candidate)
+        public bool update(StudentCandidate candidate)
         {
             return datos.updateStatusCandidate(candidate);
         }

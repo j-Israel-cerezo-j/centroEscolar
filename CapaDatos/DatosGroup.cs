@@ -7,6 +7,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using Entidades;
+using CapaDatos.Exceptions;
+
 namespace CapaDatos
 {
     public class DatosGroup
@@ -52,10 +54,10 @@ namespace CapaDatos
             }
             return ban;
         }
-        public bool add(Group group)
+        public int add(Group group)
         {
 
-            bool ban;
+            int idGrupoRecuperado=0;
             Comando.CommandType = CommandType.StoredProcedure;
             Comando.CommandText = "pro_addGroup";
             try
@@ -63,13 +65,11 @@ namespace CapaDatos
                 Comando.Parameters.Add(new SqlParameter("@group", SqlDbType.VarChar, 20));
                 Comando.Parameters["@group"].Value = group.nombre;
                 Conexion.Open();
-                Comando.ExecuteNonQuery();
-                ban = true;
+                idGrupoRecuperado = (int)Comando.ExecuteScalar();                               
             }
-            catch (SqlException e)
-            {
-                ban = false;
-                throw new Exception(e.Message);
+            catch (Exception e)
+            {                
+                throw new DaoException(e.Message);
             }
             finally
             {
@@ -79,7 +79,7 @@ namespace CapaDatos
                 }
                 Comando.Parameters.Clear();
             }
-            return ban;
+            return idGrupoRecuperado;
         }
         public List<Group> listarGroups()
         {
@@ -172,6 +172,33 @@ namespace CapaDatos
                 Comando.Parameters.Clear();
             }
             return ban;
+        }
+        public DataTable tableGroups()
+        {
+            DataTable candidates = new DataTable();
+            SqlDataReader renglon;
+            Comando.Connection = Conexion;
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.CommandText = "pro_innerGroups";
+            try
+            {               
+                Conexion.Open();
+                renglon = Comando.ExecuteReader();
+                candidates.Load(renglon);
+            }
+            catch (SqlException e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if (Conexion.State == ConnectionState.Open)
+                {
+                    Conexion.Close();
+                }
+                Comando.Parameters.Clear();
+            }
+            return candidates;
         }
     }
 }

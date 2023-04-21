@@ -1,12 +1,9 @@
-﻿function addStudentCandidate(evt) {
-    evt.preventDefault()
+﻿function addStudentCandidate(formData) {    
     Swal.fire({
         title: 'Cargando...',
         showConfirmButton: false
     })
     var f = $(this);
-    var formData = new FormData(document.getElementById("form1"));
-    console.log(formData);
     $.ajax({
         url: "Handlers/preRegisterHandler.aspx",
         type: "post",
@@ -17,7 +14,12 @@
         processData: false,
         success: function (resultado) {            
             swal.close()
-            if (resultado.success) {                
+            if (resultado.success) {     
+                //Swal.fire({
+                //    icon: 'success',
+                //    title: 'Registro exitoso, espera el dia de tu examen',
+                //    showConfirmButton: false
+                //})
                 alertWithDatas(resultado.data.info);
             }
             else {                
@@ -25,7 +27,8 @@
                     icon: 'error',
                     confirmButtonColor: '#572364',
                     title: 'Oops...',
-                    text: resultado.error
+                    text: resultado.error,
+                    footer: resultado.data.footeer
                 })
 
             }

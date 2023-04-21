@@ -32,7 +32,7 @@ namespace CapaDatos
             try
             {
                 Comando.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                Comando.Parameters["@id"].Value = student.idAlumno;
+                Comando.Parameters["@id"].Value = student.id;
                 Comando.Parameters.Add(new SqlParameter("@nombres", SqlDbType.VarChar, 40));
                 Comando.Parameters["@nombres"].Value = student.nombres;
                 Comando.Parameters.Add(new SqlParameter("@apellidoP", SqlDbType.VarChar, 20));
@@ -43,6 +43,11 @@ namespace CapaDatos
                 Comando.Parameters["@correoP"].Value = student.correoP;
                 Comando.Parameters.Add(new SqlParameter("@telefono", SqlDbType.VarChar, 30));
                 Comando.Parameters["@telefono"].Value = student.telefono;
+                Comando.Parameters.Add(new SqlParameter("@image", SqlDbType.Text));
+                Comando.Parameters["@image"].Value = student.image;
+                Comando.Parameters.Add(new SqlParameter("@fileName", SqlDbType.VarChar,50));
+                Comando.Parameters["@fileName"].Value = student.fileName;
+
                 Conexion.Open();
                 Comando.ExecuteNonQuery();
                 ban = true;
@@ -50,7 +55,7 @@ namespace CapaDatos
             catch (SqlException e)
             {
                 ban = false;
-                throw new Exception(e.Message);
+                throw new DaoException(e.Message);
             }
             finally
             {
@@ -92,8 +97,10 @@ namespace CapaDatos
                 Comando.Parameters["@correoIns"].Value = student.correoIns;
                 Comando.Parameters.Add(new SqlParameter("@fechaNac", SqlDbType.DateTime));
                 Comando.Parameters["@fechaNac"].Value = student.fechaNac;
+                Comando.Parameters.Add(new SqlParameter("@fkStatusUser", SqlDbType.VarChar,50));
+                Comando.Parameters["@fkStatusUser"].Value = student.fkStatusUser;
                 Comando.Parameters.Add(new SqlParameter("@fkDomicilie", SqlDbType.Int));
-                Comando.Parameters["@fkDomicilie"].Value = student.fkDomicilio;
+                Comando.Parameters["@fkDomicilie"].Value = student.fkAddress;
                 Conexion.Open();
                 Comando.ExecuteNonQuery();
                 ban = true;
@@ -336,6 +343,35 @@ namespace CapaDatos
             {
                 Comando.Parameters.Add(new SqlParameter("@idStudent", SqlDbType.Int));
                 Comando.Parameters["@idStudent"].Value = id;
+                Conexion.Open();
+                renglon = Comando.ExecuteReader();
+                candidates.Load(renglon);
+            }
+            catch (SqlException e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if (Conexion.State == ConnectionState.Open)
+                {
+                    Conexion.Close();
+                }
+                Comando.Parameters.Clear();
+            }
+            return candidates;
+        }
+        public DataTable tableStudentsByMatchingCharacterss(string characters)
+        {
+            DataTable candidates = new DataTable();
+            SqlDataReader renglon;
+            Comando.Connection = Conexion;
+            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.CommandText = "pro_innerStudentByCharacters";
+            try
+            {
+                Comando.Parameters.Add(new SqlParameter("@characters", SqlDbType.Text));
+                Comando.Parameters["@characters"].Value = characters;
                 Conexion.Open();
                 renglon = Comando.ExecuteReader();
                 candidates.Load(renglon);

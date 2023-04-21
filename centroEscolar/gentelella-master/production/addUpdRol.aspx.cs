@@ -12,13 +12,26 @@ namespace centroEscolar.gentelella_master.production
     {
         private LogicaRol logicaRol = new LogicaRol();
         public string getJsonRoles { get; set; }
+        public List<TypeWorker> getTypesWorkers { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            jsonRoles();
+            if (Session["Administradorr"] != null)
+            {
+                jsonRoles();
+                listTypesWorkers();
+            }
+            else
+            {
+                Response.Redirect("indexUser.aspx");
+            }
         }
         private void jsonRoles()
         {
             getJsonRoles=logicaRol.jsonRoles();
+        }
+        private void listTypesWorkers()
+        {
+            getTypesWorkers = logicaRol.listTypesWorker();
         }
     }
 }

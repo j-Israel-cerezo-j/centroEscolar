@@ -1,10 +1,11 @@
-﻿function buildTableCandidates(json, listStatusCandidates) {
-    document.getElementById("containerTableCandidates").innerHTML = "";
-    var ban = false;
-    var cont = 1;
-    var html = `           
+﻿function buildTableCandidates(json, listStatusCandidates, jsonOnkeyp = true) {
+    if (document.getElementById("containerTableCandidates") != undefined) {
+        document.getElementById("containerTableCandidates").innerHTML = "";
+        var ban = false;
+        var cont = 1;
+        var html = `           
                   <div class="x_title">
-                    <h2>Candidatos<small></small></h2>
+                    <h2>Alumnos candidatos<small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>                      
@@ -37,9 +38,10 @@
                           </tr>
                         </thead>
                         <tbody>`;
-    for (var i = 0; i < json.length; i++) {
-        ban = true;
-        html += `
+        if (json != undefined) {
+            for (var i = 0; i < json.length; i++) {
+                ban = true;
+                html += `
             <tr class="even pointer">
                 <td class=" ">${cont++}</td>
                 <td class="last">
@@ -47,39 +49,52 @@
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Action <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu"> `
-        for (var j = 0; j < listStatusCandidates.length; j++) {
-            html += ` <li id="status` + listStatusCandidates[j].id + `" data-id-candidate="${json[i].idCandidato}" data-value="` + listStatusCandidates[j].id +`" class="dropdown-item" onclick="changeStaatus(event)">` + listStatusCandidates[j].descripcion +`</li> `
-        }                         
-        html += ` </ul>
+                for (var j = 0; j < listStatusCandidates.length; j++) {
+                    html += ` <li id="status` + listStatusCandidates[j].id + `" data-id-candidate="${json[i].id}" data-value="` + listStatusCandidates[j].id + `" class="dropdown-item" onclick="changeStaatus(event)">` + listStatusCandidates[j].descripcion + `</li> `
+                }
+                html += ` </ul>
                     </div>
                 </td >
                 `
-        html += ` <td class=" ">${json[i].descripStatus}</td>`
-        html += ` <td class=" ">${json[i].matricula}</td>`
-        html += ` <td class=" ">${json[i].nombres}</td>`
-        html += ` <td class=" ">${json[i].apellidoP} ${json[i].apellidoM}</td>`
-        html += ` <td class=" ">${json[i].curp}</td>`
-        html += ` <td class=" ">${json[i].correoP}</td>`
-        html += ` <td class=" ">${json[i].correoIns}</td>`
-        html += ` <td class=" ">${json[i].telefono}</td>`        
-        html += ` <td class=" ">${json[i].division}</td>`
-        html += ` <td class=" ">${json[i].carrera}</td>`       
-        html += `
+                html += ` <td class=" ">${json[i].descripStatus}</td>`
+                html += ` <td class=" ">${json[i].matricula}</td>`
+                html += ` <td class=" ">${json[i].nombres}</td>`
+                html += ` <td class=" ">${json[i].apellidoP} ${json[i].apellidoM}</td>`
+                html += ` <td class=" ">${json[i].curp}</td>`
+                html += ` <td class=" ">${json[i].correoP}</td>`
+                html += ` <td class=" ">${json[i].correoIns}</td>`
+                html += ` <td class=" ">${json[i].telefono}</td>`
+                html += ` <td class=" ">${json[i].division}</td>`
+                html += ` <td class=" ">${json[i].carrera}</td>`
+                html += `
                                 </tr> `
-    }
-    html += `</tbody>
+            }
+        }
+        html += `</tbody>
                       </table>
                     </div>													
                   </div>`
-    if (ban) {
-        document.getElementById("containerTableCandidates").innerHTML = html;
-    } else {
-        document.getElementById("containerTableCandidates").innerHTML = "<h4 class='text-center'>Ningún candidato para esta división</h4>"
-    }
-
+        if (ban) {
+            document.getElementById("containerTableCandidates").innerHTML = html;
+            //initChecksTable();
+            //addEventCheckAll();
+        } else if (!jsonOnkeyp) {
+            document.getElementById("containerTableCandidates").innerHTML = "<h4 class='text-center'>No se encontro ninguna coincidencia</h4>"
+        }
+        else {
+            document.getElementById("containerTableCandidates").innerHTML = "<h4 class='text-center'>Ningún candidato para esta división</h4>"
+        }
+    }    
 }
 
-function addEventCheckAll() {
-    var checkAll = document.getElementById('check-all');
-    checkAll.nextElementSibling.setAttribute('onclick', 'toggleSelectAll()');
-}
+
+//function addEventCheckAll() {
+//    var checkAll = document.getElementById('check-all');
+//    checkAll.nextElementSibling.setAttribute('onclick', 'toggleSelectAll()');
+//}
+//function initChecksTable() {
+//    $('#tbl-roles input[type=checkbox]').iCheck({
+//        checkboxClass: 'icheckbox_flat-green',
+//        handle: 'checkbox'
+//    });
+/*}*/

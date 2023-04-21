@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CapaLogicaNegocio.retrieveAtributesValues
 {
-    public class RetrieveAtributesValues
+    public class RetrieveAtributes
     {
-        public static string retrieveAtributesValues(Dictionary<string, string> submit,string campo)
+        public static string values(Dictionary<string, string> submit,string campo)
         {
             string atrivutteValue = "";
             foreach (var item in submit)

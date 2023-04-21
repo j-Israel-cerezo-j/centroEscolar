@@ -1,0 +1,2 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="requestDataStatusUserHandler.aspx.cs" Inherits="centroEscolar.gentelella_master.production.Handlers.requestDataStatusUserHandler" %>
+<%=getJsonResponse %>

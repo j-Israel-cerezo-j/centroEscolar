@@ -45,21 +45,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="binderSurvey\InsertManyDatosSurvey.cs" />
+    <Compile Include="binderSurvey\QuestionAnswerData.cs" />
+    <Compile Include="binderSurvey\QuestionsCategoryData.cs" />
+    <Compile Include="binderSurvey\QuestionsData.cs" />
+    <Compile Include="binderSurvey\SurveysData.cs" />
+    <Compile Include="binderSurvey\UniversityDatos.cs" />
+    <Compile Include="binderSurvey\UserData.cs" />
+    <Compile Include="DatosBuilding.cs" />
     <Compile Include="DatosCarrer.cs" />
+    <Compile Include="DatosClassroom.cs" />
     <Compile Include="DatosDivisions.cs" />
     <Compile Include="DatosDomicilio.cs" />
+    <Compile Include="DatosEmploye.cs" />
     <Compile Include="DatosGroup.cs" />
     <Compile Include="DatosHour.cs" />
     <Compile Include="DatosLevel.cs" />
     <Compile Include="DatosPeriod.cs" />
+    <Compile Include="DatosRolePrivileges.cs" />
     <Compile Include="DatosRoles.cs" />
     <Compile Include="DatosStatusCandidate.cs" />
     <Compile Include="DatosStudent.cs" />
     <Compile Include="DatosStudentCandidate.cs" />
     <Compile Include="DatosSubjects.cs" />
+    <Compile Include="DatosTypeClassrooms.cs" />
+    <Compile Include="DatosTypeWorker.cs" />
+    <Compile Include="DatosUser.cs" />
+    <Compile Include="DeleteWhere.cs" />
     <Compile Include="Exceptions\DaoException.cs" />
+    <Compile Include="FindFrom.cs" />
+    <Compile Include="InsesrtsManysDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Querys\Query.cs" />
+    <Compile Include="DatosStatusUsers.cs" />
     <Compile Include="ValidateIfExits.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -12,6 +12,7 @@ namespace Entidades
     {
         public int idRol { get; set; }
         public string rol { get; set; }
+        public string fkTypeWorker { get; set; }
         public Rol()
         {
 
@@ -20,12 +21,14 @@ namespace Entidades
         {            
             this.idRol = (int)(Validation.getValue(renglon, "idRol") ?? 0);
             this.rol = (string)Validation.getValue(renglon, "rol");
+            this.fkTypeWorker = (string)(Validation.getValue(renglon, "fkTypeWorker") ?? 0);
         }
         override
         public string ToString()
         {
             return 
                 "idRol:'" + idRol + "', " +
+                "fkTypeWorker:'" + fkTypeWorker + "', " +
                 "rol:'" + rol+"'";
         }
     }

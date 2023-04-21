@@ -3,7 +3,7 @@
     document.getElementById("divisiones").innerHTML = "";
 
     var optionSeleccioneUna = document.createElement("option")
-    optionSeleccioneUna.value = "-1"
+    optionSeleccioneUna.value = ""
     optionSeleccioneUna.text = "Seleccione una opción";    
     selectDivisions.appendChild(optionSeleccioneUna);
     if (divisions.length>0) {

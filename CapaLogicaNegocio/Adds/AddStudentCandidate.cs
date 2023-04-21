@@ -11,7 +11,7 @@ namespace CapaLogicaNegocio.Adds
     public class AddStudentCandidate
     {
         private DatosStudentCandidate datos = new DatosStudentCandidate();
-        public int add(StudentCandidate studentCandidate)
+        public bool add(StudentCandidate studentCandidate)
         {
             return datos.add(studentCandidate);
         }

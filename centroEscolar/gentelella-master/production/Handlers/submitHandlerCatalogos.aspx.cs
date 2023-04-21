@@ -8,51 +8,72 @@ using CapaLogicaNegocio;
 using Entidades;
 using Newtonsoft.Json;
 using CapaLogicaNegocio.Exceptions;
+using centroEscolar.gentelella_master.production.messagesErrors;
+
 namespace centroEscolar.gentelella_master.production
-{    
+{
     public partial class submitHandlerCatalogos : System.Web.UI.Page
     {
         private FacadeRecoverData facadeRecoverData = new FacadeRecoverData();
         private FacadeRequestAjax facadeRequestAjax = new FacadeRequestAjax();
-        public string getJsonResponse { get; private set; } = "{\"k\":1}";
+        private StudentService studentService = new StudentService();
+        private ValidateUserStatus validateUserStatus = new ValidateUserStatus();
+        public static string getJsonResponse { get; private set; } = "{\"k\":1}";
+             
         protected void Page_Load(object sender, EventArgs e)
         {
+            bool banUserBroked=false;
+            bool banUserSessionClose=false;
             string type = Request.Form["typeSubmit"];
-            if (type=="add")
+            if (type == "add")
             {
-                requestAdd();
-            }else if (type == "recoverData")
+                validateUserStatus.validateStatusUserLoggeIn(requestAdd, ref banUserBroked,ref banUserSessionClose);
+               
+            }
+            else if (type == "recoverData")
             {
-                recoverData();
+                validateUserStatus.validateStatusUserLoggeIn(recoverData, ref banUserBroked, ref banUserSessionClose);
             }
             else if (type == "delete")
             {
-                requestDelete();
-            }else if (type == "update")
+                validateUserStatus.validateStatusUserLoggeIn(requestDelete, ref banUserBroked, ref banUserSessionClose);
+            }
+            else if (type == "update")
             {
-                requestUpdate();
+                validateUserStatus.validateStatusUserLoggeIn(requestUpdate, ref banUserBroked, ref banUserSessionClose);
+            }
+
+            if (banUserBroked)
+            {
+                getJsonResponse = validateUserStatus.messageJsonErrorUserBrokedSessionClose(MessagesErrors.accountLockedAndLoggedOut);
+            }
+            else if (banUserSessionClose)
+            {
+                getJsonResponse = validateUserStatus.messageJsonErrorUserBrokedSessionClose(MessagesErrors.closedSession);
             }
         }
         private void requestAdd()
-        {            
+        {
+            var data = new Dictionary<string, Object>();
             Response response = new Response();
             string catalogo = Request.Form["catalogo"];
             string[] submit = Request.Form.AllKeys;
+            var file = Request.Files["fotografia"];
+            string typeWorker = Request.QueryString["typeWorker"];
             var valuesSubmit = getValuesForm(submit);
             if (submit.Length>0 && catalogo != "")
             {
                 try
                 {
-                    var success = facadeRequestAjax.ajaxRequestCatalogos(catalogo, valuesSubmit);
+                    var success = facadeRequestAjax.ajaxRequestCatalogosAdd(catalogo, valuesSubmit, file);
                     if (success)
                     {
                         response.success = success;
-                        string table= facadeRequestAjax.ajaxRequestCatalogosTable(catalogo);
-                        var data = new Dictionary<string, Object>();
+                        string table= facadeRequestAjax.ajaxRequestCatalogosTable(catalogo, typeWorker);                        
                         data.Add("info", catalogo);
                         data.Add("type", "add");
                         data.Add("table", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(table));
-                        response.data = data;
+                      
                     }
                     else
                     {
@@ -69,10 +90,13 @@ namespace centroEscolar.gentelella_master.production
                 response.error = "Campos vacios";
                 response.success = false;                
             }
+            data.Add("footeer", "Verificar por favor");
+            response.data = data;
             getJsonResponse = JsonConvert.SerializeObject(response);
         }
         private void recoverData()
-        {                      
+        {
+            var data = new Dictionary<string, Object>();
             Response response = new Response();
             string catalogo = Request.Form["catalogo"];
             string id = Request.QueryString["id"];            
@@ -82,12 +106,16 @@ namespace centroEscolar.gentelella_master.production
                 {
                     var json = facadeRecoverData.recoverData(catalogo,id);
                     if (json!="")
-                    {
-                        response.success = true;                        
-                        var data = new Dictionary<string, Object>();
+                    {                       
+                        response.success = true;                                               
                         data.Add("info", catalogo);
                         data.Add("recoverDates", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(json));
-                        response.data = data;
+
+                        if (catalogo == "alumnos")
+                        {
+                            string jsonMunicpes=studentService.jsonMinicipesByStateStudent(id);
+                            data.Add("municipios", JsonConvert.DeserializeObject<string[]>(jsonMunicpes));
+                        }                       
                     }
                     else
                     {
@@ -104,29 +132,32 @@ namespace centroEscolar.gentelella_master.production
                 response.error = "Campos vacios";
                 response.success = false;                
             }
+            data.Add("footeer", "Verificar por favor");
+            response.data = data;
             getJsonResponse = JsonConvert.SerializeObject(response);
         }
         private void requestUpdate()
-        {            
+        {
+            var data = new Dictionary<string, Object>();
             Response response = new Response();
             string catalogo = Request.Form["catalogo"];
             string strId = Request.Form["id"];
+            var file = Request.Files["fotografia"];
+            string typeWorker = Request.QueryString["typeWorker"];
             string[] submit = Request.Form.AllKeys;
             var valuesSubmit = getValuesForm(submit);
             if (strId!="" && catalogo != "" && valuesSubmit.Count>0)
             {
                 try
                 {
-                    var success = facadeRequestAjax.ajaxRequestUpdate(catalogo, valuesSubmit, strId);
+                    var success = facadeRequestAjax.ajaxRequestUpdate(catalogo, valuesSubmit, strId, file);
                     if (success)
                     {
                         response.success = success;
-                        string table = facadeRequestAjax.ajaxRequestCatalogosTable(catalogo);
-                        var data = new Dictionary<string, Object>();
+                        string table = facadeRequestAjax.ajaxRequestCatalogosTable(catalogo, typeWorker);                       
                         data.Add("info", catalogo);
                         data.Add("type", "update");
-                        data.Add("table", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(table));
-                        response.data = data;
+                        data.Add("table", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(table));                        
                     }
                     else
                     {
@@ -134,7 +165,7 @@ namespace centroEscolar.gentelella_master.production
                     }
                 }
                 catch (ServiceException ex)
-                {
+                {                   
                     response.error = ex.getMessage();
                 }
             }
@@ -143,10 +174,13 @@ namespace centroEscolar.gentelella_master.production
                 response.error = "Campos vacios";
                 response.success = false;                
             }
+            data.Add("footeer", "Verificar por favor");
+            response.data = data;
             getJsonResponse = JsonConvert.SerializeObject(response);
         }
         private void requestDelete()
-        {            
+        {
+            var data = new Dictionary<string, Object>();
             Response response = new Response();
             string catalogo = Request.Form["catalogo"];
             string strIds = Request.Form["idsToDelete"];
@@ -158,12 +192,10 @@ namespace centroEscolar.gentelella_master.production
                     if (success)
                     {
                         response.success = success;
-                        string table = facadeRequestAjax.ajaxRequestCatalogosTable(catalogo);
-                        var data = new Dictionary<string, Object>();
+                        string table = facadeRequestAjax.ajaxRequestCatalogosTable(catalogo);                        
                         data.Add("info", catalogo);
                         data.Add("type", "delete");
-                        data.Add("table", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(table));
-                        response.data = data;
+                        data.Add("table", JsonConvert.DeserializeObject<Dictionary<string, Object>[]>(table));                     
                     }
                     else
                     {
@@ -174,7 +206,9 @@ namespace centroEscolar.gentelella_master.production
                 {
                     response.error = "¡Error inesperado en el servidor!";                    
                 }
-            }           
+            }
+            data.Add("footeer", "Verificar por favor");
+            response.data = data;
             getJsonResponse = JsonConvert.SerializeObject(response);
         }
         private Dictionary<string, string> getValuesForm(string[] submitKeys)

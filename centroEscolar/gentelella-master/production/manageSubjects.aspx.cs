@@ -13,7 +13,15 @@ namespace centroEscolar.gentelella_master.production
         public string getJsonSubjects { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            jsonSubjects();
+            if (Session["Administradorr"] != null)
+            {
+                jsonSubjects();
+            }
+            else
+            {
+                Response.Redirect("indexUser.aspx");
+            }
+            
         }
         private void jsonSubjects()
         {

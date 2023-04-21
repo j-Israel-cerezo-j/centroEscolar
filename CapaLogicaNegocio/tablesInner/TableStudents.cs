@@ -24,5 +24,9 @@ namespace CapaLogicaNegocio.tablesInner
         {
             return datosStudent.datasStudentt(idStudent);
         }
+        public DataTable tableStudentBymatchingCharacters(string characters)
+        {
+            return datosStudent.tableStudentsByMatchingCharacterss(characters);
+        }
     }
 }

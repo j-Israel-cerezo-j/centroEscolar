@@ -14,6 +14,9 @@ using CapaLogicaNegocio.updates;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
 using Newtonsoft.Json;
+using CapaLogicaNegocio.MessageErrors;
+using CapaLogicaNegocio.Onkeyups;
+using CapaLogicaNegocio.tablesInner;
 namespace CapaLogicaNegocio
 {
     public class DivisionService
@@ -25,6 +28,7 @@ namespace CapaLogicaNegocio
         private UpdateDivision updateDiv = new UpdateDivision();
         private DeleteDivisons deleteDiv = new DeleteDivisons(); 
         private RecoverDataCarrer recoverDatCarrer=new RecoverDataCarrer();
+        private TableDivisions tablesDivisions = new TableDivisions();
         public bool add(Dictionary<string, string> submit)
         {
             bool ban = false;
@@ -32,8 +36,8 @@ namespace CapaLogicaNegocio
             if (camposEmptysOrNull.Count == 0)
             {
                 Division division = new Division();
-                division.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "division");
-                string strSelectFkCarre = RetrieveAtributesValues.retrieveAtributesValues(submit, "carrera");
+                division.nombre = RetrieveAtributes.values(submit, "division");
+                string strSelectFkCarre = RetrieveAtributes.values(submit, "carrera");
                 validateCarreraSelec(strSelectFkCarre);
                 division.fkIdCarrera = Convert.ToInt32(strSelectFkCarre);
                 return addDiv.add(division);
@@ -107,8 +111,8 @@ namespace CapaLogicaNegocio
             {
                 Division division = new Division();
                 division.idDivision =Convert.ToInt32( strId);
-                division.nombre = RetrieveAtributesValues.retrieveAtributesValues(submit, "division");
-                string strSelectFkCarre = RetrieveAtributesValues.retrieveAtributesValues(submit, "carrera");
+                division.nombre = RetrieveAtributes.values(submit, "division");
+                string strSelectFkCarre = RetrieveAtributes.values(submit, "carrera");
                 validateCarreraSelec(strSelectFkCarre);
                 division.fkIdCarrera = Convert.ToInt32(strSelectFkCarre);
                 return updateDiv.update(division);
@@ -137,14 +141,36 @@ namespace CapaLogicaNegocio
         {
             if (!Validation.Select(select))
             {
-                throw new ServiceException("Selecciona una opción correcta sobre selector");
+                throw new ServiceException(MessageError.invalidSelectorIn());
             }
         }
         public string divisionsXcarrer(string strId)
         {
             int id = Convert.ToInt32(strId);
-            var divisiones = listDiv.listarDivisionsXcarrer(id);
-            return jsonDivisions(divisiones);
+            var divisions=new List<Division>();
+            if (id == -2)
+            {
+                divisions = listDiv.listarDivisions();
+
+            }
+            else
+            {
+                divisions = listDiv.listarDivisionsXcarrer(id);
+            }
+            return jsonDivisions(divisions);
+
+        }
+        public StringBuilder onkeyupSearchTable(string caracteres)
+        {          
+            var table = tablesDivisions.tableDivisionsBymatchingCharacters(caracteres);
+            return Converter.ToJson(table);
+
+        }
+        public List<string> onkeyupSearch(string caracteres)
+        {
+            caracteres = "%" + caracteres + "%";
+            var table = tablesDivisions.tableDivisionsBymatchingCharacters(caracteres);
+            return Converter.ToList(table);
 
         }
     }

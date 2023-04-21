@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.9.3\build\Microsoft.TypeScript.MSBuild.props" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.3\build\Microsoft.TypeScript.MSBuild.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -32,7 +33,7 @@
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,11 +57,31 @@
       <HintPath>..\Entidades\bin\Debug\Entidades.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.8.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.8\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -122,10 +143,128 @@
     <Content Include="gentelella-master\gulpfile.js" />
     <Content Include="gentelella-master\LICENSE.txt" />
     <Content Include="gentelella-master\production\addUpdRol.aspx" />
+    <Content Include="gentelella-master\production\assets\img\close-icon.svg" />
+    <Content Include="gentelella-master\production\assets\img\header-bg.jpg" />
+    <Content Include="gentelella-master\production\assets\img\logos\facebook.svg" />
+    <Content Include="gentelella-master\production\assets\img\logos\google.svg" />
+    <Content Include="gentelella-master\production\assets\img\logos\ibm.svg" />
+    <Content Include="gentelella-master\production\assets\img\logos\microsoft.svg" />
+    <Content Include="gentelella-master\production\assets\img\map-image.png" />
+    <Content Include="gentelella-master\production\assets\img\navbar-logo.svg" />
+    <Content Include="gentelella-master\production\assets\img\pre-registro-1.png" />
+    <Content Include="gentelella-master\production\assets\img\registro-y-pre-registro-para-eventos-congresos-y-convenciones.jpg" />
+    <Content Include="gentelella-master\production\binderSurvey\answeredSurveys.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\css\cssEncuesta.css" />
+    <Content Include="gentelella-master\production\binderSurvey\css\cssIndex.css" />
+    <Content Include="gentelella-master\production\binderSurvey\css\cssMenu.css" />
+    <Content Include="gentelella-master\production\binderSurvey\Encuesta.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\graphics.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\Handlers\addUniversityHandler.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\Handlers\closeSessionHandler.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\Handlers\crudCatalogHandler.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\Handlers\onkeyupSearchCatalogosHandler.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\Handlers\OnkeyupSearchUniversityHandler.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\Handlers\questionAnswersHandler.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\Handlers\questionsByCategorusHandler.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\analisisdatos.jpg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\desercion.jpg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\escuela1.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\escuela2.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\escuela3.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\escuela4.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\escuela5.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\escuela6.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\fondoEs1.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\sitioweb.jpg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\team-2.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\Imagenes\team-3.jpeg" />
+    <Content Include="gentelella-master\production\binderSurvey\indexSurvey.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\js\answeredSurveys\buildTable.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\categorysQuestions\add.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\categorysQuestions\buidPdfOfTable.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\categorysQuestions\buildTable.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\categorysQuestions\delete.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\categorysQuestions\onkeyupSearch.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\categorysQuestions\recoverData.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\categorysQuestions\update.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\encuesta\add.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\encuesta\ajax\closeSessionAjax.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\encuesta\buildQuestionsWhitdAnswer.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\encuesta\buildUniversidades.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\encuesta\groupQuestionAndAnswerAndAddItToTheFormm.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\encuesta\onkeyupSearchUniversity.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\questions\add.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\questions\ajax\recoverQuestionsByCategorysAjax.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\questions\buildTable.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\questions\delete.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\questions\onkeyupSearch.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\questions\questionsByCategoris.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\questions\recoverData.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\questions\update.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\reponses\add.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\reponses\builTable.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\reponses\delete.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\reponses\onkeyupSearch.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\reponses\recoverData.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\reponses\update.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\utils\Ajax\crudCatalogsAjax.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\utils\Ajax\onkeyubSearchCatalogos.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\utils\Ajax\onkeyupSearchUniversitysAjax.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\utils\Ajax\recoverDataAjax.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\utils\switchCatalogosRecoverData.js" />
+    <Content Include="gentelella-master\production\binderSurvey\js\utils\switchTablesOnkeyup.js" />
+    <Content Include="gentelella-master\production\binderSurvey\manageCatalogOfQuestionCategories.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\manageQuestions.aspx" />
+    <Content Include="gentelella-master\production\binderSurvey\manageResponseCatalog.aspx" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-grid.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-grid.min.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-grid.rtl.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-reboot.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-reboot.min.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-reboot.rtl.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-utilities.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-utilities.min.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-utilities.rtl.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap.min.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap.rtl.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap.rtl.min.css" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.bundle.js" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.bundle.min.js" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.esm.js" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.esm.min.js" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.js" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.min.js" />
     <Content Include="gentelella-master\production\css\maps\jquery-jvectormap-2.0.3.css" />
+    <Content Include="gentelella-master\production\css\personalizados\buttons.css" />
+    <Content Include="gentelella-master\production\css\personalizados\containerBorder.css" />
+    <Content Include="gentelella-master\production\css\personalizados\errors.css" />
+    <Content Include="gentelella-master\production\css\personalizados\login\imgFondo.css" />
+    <Content Include="gentelella-master\production\css\personalizados\login\style.css" />
+    <Content Include="gentelella-master\production\css\personalizados\reflejos.css" />
+    <Content Include="gentelella-master\production\css\styles.css" />
+    <Content Include="gentelella-master\production\Handlers\apiMexico.aspx" />
+    <Content Include="gentelella-master\production\Handlers\deleteCardSessionRecentUserHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\deleteEmployeHandler.aspx" />
     <Content Include="gentelella-master\production\Handlers\handlerRequestDivisionsXCarrer.aspx" />
+    <Content Include="gentelella-master\production\Handlers\handlersTables\tableBuildingsHandler.aspx" />
     <Content Include="gentelella-master\production\Handlers\manageStatusCandidatesAlumHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\OnkeyupSearchCatalogosHandler.aspx" />
     <Content Include="gentelella-master\production\Handlers\preRegisterHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\recoverDataEmployeHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\recoverDivisionsSelectedByEmployeHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\recoverTypeSalonesOptionsHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\requestBuildingByCarrerHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\requestClassroomsByTypeOptionsHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\requestDataStatusUserHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\requestStatusCandidateHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\requestTableEmployeByTypeWorkerHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\requestUpdateStatusUserHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\rolesByTypeWorkerHandler.aspx" />
+    <Content Include="gentelella-master\production\Handlers\rolesSelectedHandler.aspx" />
     <Content Include="gentelella-master\production\Handlers\tableCandidatesByDivisHandler.aspx" />
     <Content Include="gentelella-master\production\images\american-express.png" />
     <Content Include="gentelella-master\production\images\cropper.jpg" />
@@ -135,6 +274,12 @@
     <Content Include="gentelella-master\production\images\mastercard.png" />
     <Content Include="gentelella-master\production\images\media.jpg" />
     <Content Include="gentelella-master\production\images\paypal.png" />
+    <Content Include="gentelella-master\production\images\perzonalizadas\fondos\edif2.jpg" />
+    <Content Include="gentelella-master\production\images\perzonalizadas\fondos\_ACU9i_3AiP.png" />
+    <Content Include="gentelella-master\production\images\perzonalizadas\logos\controlEscolIcon.png" />
+    <Content Include="gentelella-master\production\images\perzonalizadas\logos\descarga %281%29.png" />
+    <Content Include="gentelella-master\production\images\perzonalizadas\logos\utpLogo.png" />
+    <Content Include="gentelella-master\production\images\perzonalizadas\vacio\fotoefectos.com_.jpg" />
     <Content Include="gentelella-master\production\images\picture.jpg" />
     <Content Include="gentelella-master\production\images\prod-1.jpg" />
     <Content Include="gentelella-master\production\images\prod-2.jpg" />
@@ -144,55 +289,150 @@
     <Content Include="gentelella-master\production\images\user.png" />
     <Content Include="gentelella-master\production\images\visa.png" />
     <Content Include="gentelella-master\production\index.aspx" />
+    <Content Include="gentelella-master\production\indexUser.aspx" />
     <Content Include="gentelella-master\production\jquey\jquery-3.2.1.min.js" />
     <Content Include="gentelella-master\production\jquey\jquery-ui.js" />
     <Content Include="gentelella-master\production\jquey\jquery.nicescroll.min.js" />
     <Content Include="gentelella-master\production\jquey\jquery.superslides.min.js" />
+    <Content Include="gentelella-master\production\jspdf.min.js_1.5.3\cdnjs\jspdf.min.js" />
+    <Content Include="gentelella-master\production\jspdf.min.js_1.5.3\unpkg\jspdf.min.js" />
     <Content Include="gentelella-master\production\js\datepicker\daterangepicker.js" />
     <Content Include="gentelella-master\production\js\moment\moment.min.js" />
     <Content Include="gentelella-master\production\js\personalizados\academicLevel\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\academicLevel\buildTableAcademicLev.js" />
     <Content Include="gentelella-master\production\js\personalizados\academicLevel\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\academicLevel\OnkeyupSearch.js" />
     <Content Include="gentelella-master\production\js\personalizados\academicLevel\recoverDatas.js" />
     <Content Include="gentelella-master\production\js\personalizados\academicLevel\update.js" />
     <Content Include="gentelella-master\production\js\personalizados\Ajax\recoverData.js" />
+    <Content Include="gentelella-master\production\js\personalizados\buildings\add.js" />
+    <Content Include="gentelella-master\production\js\personalizados\buildings\ajax\recoverDataBuildingsXcarrer.js" />
+    <Content Include="gentelella-master\production\js\personalizados\buildings\buildingsXcarrera.js" />
+    <Content Include="gentelella-master\production\js\personalizados\buildings\buildTable.js" />
+    <Content Include="gentelella-master\production\js\personalizados\buildings\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\buildings\OnkeyupSearch.js" />
+    <Content Include="gentelella-master\production\js\personalizados\buildings\recoverData.js" />
+    <Content Include="gentelella-master\production\js\personalizados\buildings\update.js" />
     <Content Include="gentelella-master\production\js\personalizados\candidates\ajax\recoverDataTableCandidatesXdivis.js" />
     <Content Include="gentelella-master\production\js\personalizados\candidates\ajax\manageStatusCandidate.js" />
+    <Content Include="gentelella-master\production\js\personalizados\candidates\ajax\requestStatusCandidate.js" />
     <Content Include="gentelella-master\production\js\personalizados\candidates\buildTableCandidates.js" />
     <Content Include="gentelella-master\production\js\personalizados\candidates\changeStatus.js" />
+    <Content Include="gentelella-master\production\js\personalizados\candidates\divsionsXcarreraManageCandidate.js" />
+    <Content Include="gentelella-master\production\js\personalizados\candidates\onkeyupSearch.js" />
     <Content Include="gentelella-master\production\js\personalizados\candidates\tableXdivsion.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\buildTableCarrers.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\carrers\OnkeyupSearch.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\recoverDatas.js" />
     <Content Include="gentelella-master\production\js\personalizados\carrers\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\add.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\ajax\responseClassroomOptionsType.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\ajax\responseTypeClassroomOptions.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\buildSelects\builSelectResponseTypeClassrooOption.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\buildTable.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\OnkeyupSearch.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\recoverDatas.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\responseClassroomsByOptions.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\respTypeClassroomOpt.js" />
+    <Content Include="gentelella-master\production\js\personalizados\classrooms\update.js" />
     <Content Include="gentelella-master\production\js\personalizados\divisions\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\divisions\ajax\recoverDataDivisionsXidCarrer.js" />
     <Content Include="gentelella-master\production\js\personalizados\divisions\buildTableDivisions.js" />
     <Content Include="gentelella-master\production\js\personalizados\divisions\delete.js" />
     <Content Include="gentelella-master\production\js\personalizados\divisions\divisionesXcarrera.js" />
+    <Content Include="gentelella-master\production\js\personalizados\divisions\OnkeyupSearch.js" />
     <Content Include="gentelella-master\production\js\personalizados\divisions\recoverDatas.js" />
     <Content Include="gentelella-master\production\js\personalizados\divisions\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\add.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\ajax\deleteEmployesAjax.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\ajax\divisionsEmployeLocal\divisionsEmployeLocalAjax.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\ajax\recoverDataEmployeAjax.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\ajax\recoverRolesSelectedByEmploye.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\ajax\recoverTableByTypeWorkerAjax.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\ajax\updateStatusAjax.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\btnReset.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\buildDivisionsSelected.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\buildRolesByTypeWorker.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\buildRolesSelected.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\builTables\buildTableEmploysDivisioanles.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\builTables\buildTableEmploysGenerales.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\changueStatus.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\onchangeSlcMuninicipess.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\onkeyupSearchh.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\recoverDataa.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\recoverMunicipesEmpl.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\recoverRolesByTypeWorker.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\recoverTablesEmployesByTypeWorker.js" />
+    <Content Include="gentelella-master\production\js\personalizados\employes\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\groups\checksFullCarrers.js" />
+    <Content Include="gentelella-master\production\js\personalizados\groups\OnkeyupSearch.js" />
     <Content Include="gentelella-master\production\js\personalizados\hours\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\hours\buildTableHours.js" />
     <Content Include="gentelella-master\production\js\personalizados\hours\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\hours\OnkeyupSearch.js" />
     <Content Include="gentelella-master\production\js\personalizados\hours\recoverData.js" />
     <Content Include="gentelella-master\production\js\personalizados\hours\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\listeners\buildings\tableBuildimgs.js" />
+    <Content Include="gentelella-master\production\js\personalizados\Login\ajax\deleteSessionRecentAjax.js" />
+    <Content Include="gentelella-master\production\js\personalizados\Login\sessionRecentUser.js" />
+    <Content Include="gentelella-master\production\js\personalizados\periods\btnReset.js" />
+    <Content Include="gentelella-master\production\js\personalizados\periods\OnkeyupSearch.js" />
+    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\addCandidate.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\ajax\addStudentCandidates.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\alertWithDataas.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\buildDivisionsInSelect.js" />
+    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\divionsXcarrera.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\divisionesXcarrera.js" />
     <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\ajax\recoverDataDivisions.js" />
+    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\onkeyupSlc.js" />
+    <Content Include="gentelella-master\production\js\personalizados\preRegisterStudent\recoverMinicipesXcarrer.js" />
+    <Content Include="gentelella-master\production\js\personalizados\privilegiosRoles\add.js" />
+    <Content Include="gentelella-master\production\js\personalizados\privilegiosRoles\buildTable.js" />
+    <Content Include="gentelella-master\production\js\personalizados\privilegiosRoles\checkFullPrivileges.js" />
+    <Content Include="gentelella-master\production\js\personalizados\privilegiosRoles\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\privilegiosRoles\OnkeyupSearch.js" />
+    <Content Include="gentelella-master\production\js\personalizados\privilegiosRoles\RecoverData.js" />
+    <Content Include="gentelella-master\production\js\personalizados\privilegiosRoles\resetBtn.js" />
+    <Content Include="gentelella-master\production\js\personalizados\privilegiosRoles\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\roles\onkeyupSearchh.js" />
+    <Content Include="gentelella-master\production\js\personalizados\serviceWorker\serviceWorker.js" />
+    <Content Include="gentelella-master\production\js\personalizados\students\ajax\updateStatusStudent.js" />
+    <Content Include="gentelella-master\production\js\personalizados\students\changueStatus.js" />
     <Content Include="gentelella-master\production\js\personalizados\students\displaySmartWizard.js" />
+    <Content Include="gentelella-master\production\js\personalizados\students\OnkeyupSearch.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\buildTableSubjects.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\subjects\OnkeyupSearch.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\recoverDatas.js" />
     <Content Include="gentelella-master\production\js\personalizados\subjects\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typeClassrooms\add.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typeClassrooms\buildTable.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typeClassrooms\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typeClassrooms\OnkeyupSearch.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typeClassrooms\recoverData.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typeClassrooms\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typesOfWorker\add.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typesOfWorker\buildTable.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typesOfWorker\delete.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typesOfWorker\onkeyupSearchh.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typesOfWorker\recoverDate.js" />
+    <Content Include="gentelella-master\production\js\personalizados\typesOfWorker\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\Ajax\onkeyupSearchCatalogos.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\apisPersonalizadas\apiMexico.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\apisPersonalizadas\funtionsByCatalogo\recoverMunicipes.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\apisPersonalizadas\switcByCatalogo\switchByCatalogoo.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\buildColoniasByCP.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\buildCPInSelect.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\buildImageNoRecords.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\buildMexicoStates.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\buildMsjValidOrInvalid.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\builMunicipios.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\CustomDate.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\defaultBtnsDisplay.js" />
     <Content Include="gentelella-master\production\js\personalizados\FacadeCatalogosRecoverData\switchCatalogosRecoverData.js" />
     <Content Include="gentelella-master\production\js\personalizados\groups\addGroup.js" />
@@ -200,6 +440,9 @@
     <Content Include="gentelella-master\production\js\personalizados\groups\delete.js" />
     <Content Include="gentelella-master\production\js\personalizados\groups\recoverDatas.js" />
     <Content Include="gentelella-master\production\js\personalizados\groups\update.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\disabledOrEnabledInputs.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\displaySmartWizard.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\enableOrDisebledReadingInputs.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\hideshow.js" />
     <Content Include="gentelella-master\production\js\personalizados\periods\add.js" />
     <Content Include="gentelella-master\production\js\personalizados\periods\buildTablePeriods.js" />
@@ -218,22 +461,36 @@
     <Content Include="gentelella-master\production\js\personalizados\students\recoverData.js" />
     <Content Include="gentelella-master\production\js\personalizados\students\update.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\currentDate.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\Ajax\rolesByTypeWorker.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\onkeyupInputEmpty.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\onkeyupNoSelectInSlc.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\styleBoxShadow.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\switchTableOnkeyup.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\validatorForm.js" />
+    <Content Include="gentelella-master\production\js\personalizados\utils\validForm.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\XMLHttpRquest\XMLHttpRequestColoniasByCP.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\XMLHttpRquest\XMLHttpRequestCPByMunicipio.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\XMLHttpRquest\XMLHttpRequestMunicipiosByState.js" />
     <Content Include="gentelella-master\production\js\personalizados\utils\XMLHttpRquest\XMLHttpRequestStatesMexico.js" />
+    <Content Include="gentelella-master\production\js\scripts.js" />
+    <Content Include="gentelella-master\production\Login.aspx" />
     <Content Include="gentelella-master\production\manageAcademicLevel.aspx" />
+    <Content Include="gentelella-master\production\manageBuildings.aspx" />
     <Content Include="gentelella-master\production\manageCarrers.aspx" />
+    <Content Include="gentelella-master\production\manageClassrooms.aspx" />
+    <Content Include="gentelella-master\production\manageClassroomType.aspx" />
     <Content Include="gentelella-master\production\manageDvisions.aspx" />
     <Content Include="gentelella-master\production\manageEmployes.aspx" />
     <Content Include="gentelella-master\production\manageGroups.aspx" />
     <Content Include="gentelella-master\production\manageHours.aspx" />
     <Content Include="gentelella-master\production\managePeriods.aspx" />
+    <Content Include="gentelella-master\production\manageRolesPrivileges.aspx" />
     <Content Include="gentelella-master\production\manageStudent.aspx" />
     <Content Include="gentelella-master\production\manageStudentsCandidates.aspx" />
     <Content Include="gentelella-master\production\manageSubjects.aspx" />
     <Content Include="gentelella-master\production\Handlers\submitHandlerCatalogos.aspx" />
+    <Content Include="gentelella-master\production\manageTypeOfWorker.aspx" />
+    <Content Include="gentelella-master\production\menu.aspx" />
     <Content Include="gentelella-master\production\preRegisterStudent.aspx" />
     <Content Include="gentelella-master\src\js\custom.js" />
     <Content Include="gentelella-master\src\js\examples.js" />
@@ -2328,6 +2585,7 @@
     <Content Include="gentelella-master\vendors\moment\templates\globals.js" />
     <Content Include="gentelella-master\vendors\moment\templates\locale-header.js" />
     <Content Include="gentelella-master\vendors\moment\templates\test-header.js" />
+    <Content Include="gentelella-master\vendors\perzonalizados\icons\person-circle.svg" />
     <Content Include="gentelella-master\vendors\requirejs\require.js" />
     <Content Include="gentelella-master\vendors\validator\fv.css" />
     <Content Include="gentelella-master\vendors\validator\index.html" />
@@ -2343,12 +2601,152 @@
     <Compile Include="gentelella-master\production\addUpdRol.aspx.designer.cs">
       <DependentUpon>addUpdRol.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\answeredSurveys.aspx.cs">
+      <DependentUpon>answeredSurveys.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\answeredSurveys.aspx.designer.cs">
+      <DependentUpon>answeredSurveys.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Encuesta.aspx.cs">
+      <DependentUpon>Encuesta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Encuesta.aspx.designer.cs">
+      <DependentUpon>Encuesta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\graphics.aspx.cs">
+      <DependentUpon>graphics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\graphics.aspx.designer.cs">
+      <DependentUpon>graphics.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\addUniversityHandler.aspx.cs">
+      <DependentUpon>addUniversityHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\addUniversityHandler.aspx.designer.cs">
+      <DependentUpon>addUniversityHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\closeSessionHandler.aspx.cs">
+      <DependentUpon>closeSessionHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\closeSessionHandler.aspx.designer.cs">
+      <DependentUpon>closeSessionHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\crudCatalogHandler.aspx.cs">
+      <DependentUpon>crudCatalogHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\crudCatalogHandler.aspx.designer.cs">
+      <DependentUpon>crudCatalogHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\onkeyupSearchCatalogosHandler.aspx.cs">
+      <DependentUpon>onkeyupSearchCatalogosHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\onkeyupSearchCatalogosHandler.aspx.designer.cs">
+      <DependentUpon>onkeyupSearchCatalogosHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\OnkeyupSearchUniversityHandler.aspx.cs">
+      <DependentUpon>OnkeyupSearchUniversityHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\OnkeyupSearchUniversityHandler.aspx.designer.cs">
+      <DependentUpon>OnkeyupSearchUniversityHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\questionAnswersHandler.aspx.cs">
+      <DependentUpon>questionAnswersHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\questionAnswersHandler.aspx.designer.cs">
+      <DependentUpon>questionAnswersHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\questionsByCategorusHandler.aspx.cs">
+      <DependentUpon>questionsByCategorusHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\Handlers\questionsByCategorusHandler.aspx.designer.cs">
+      <DependentUpon>questionsByCategorusHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\indexSurvey.aspx.cs">
+      <DependentUpon>indexSurvey.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\indexSurvey.aspx.designer.cs">
+      <DependentUpon>indexSurvey.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\manageCatalogOfQuestionCategories.aspx.cs">
+      <DependentUpon>manageCatalogOfQuestionCategories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\manageCatalogOfQuestionCategories.aspx.designer.cs">
+      <DependentUpon>manageCatalogOfQuestionCategories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\manageQuestions.aspx.cs">
+      <DependentUpon>manageQuestions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\manageQuestions.aspx.designer.cs">
+      <DependentUpon>manageQuestions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\manageResponseCatalog.aspx.cs">
+      <DependentUpon>manageResponseCatalog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\manageResponseCatalog.aspx.designer.cs">
+      <DependentUpon>manageResponseCatalog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\masterCentroEscolar.Master.cs">
+      <DependentUpon>masterCentroEscolar.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\masterCentroEscolar.Master.designer.cs">
+      <DependentUpon>masterCentroEscolar.Master</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\masterSurvay.Master.cs">
+      <DependentUpon>masterSurvay.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\binderSurvey\masterSurvay.Master.designer.cs">
+      <DependentUpon>masterSurvay.Master</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\apiMexico.aspx.cs">
+      <DependentUpon>apiMexico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\apiMexico.aspx.designer.cs">
+      <DependentUpon>apiMexico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\deleteCardSessionRecentUserHandler.aspx.cs">
+      <DependentUpon>deleteCardSessionRecentUserHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\deleteCardSessionRecentUserHandler.aspx.designer.cs">
+      <DependentUpon>deleteCardSessionRecentUserHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\deleteEmployeHandler.aspx.cs">
+      <DependentUpon>deleteEmployeHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\deleteEmployeHandler.aspx.designer.cs">
+      <DependentUpon>deleteEmployeHandler.aspx</DependentUpon>
+    </Compile>
     <Compile Include="gentelella-master\production\Handlers\handlerRequestDivisionsXCarrer.aspx.cs">
       <DependentUpon>handlerRequestDivisionsXCarrer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="gentelella-master\production\Handlers\handlerRequestDivisionsXCarrer.aspx.designer.cs">
       <DependentUpon>handlerRequestDivisionsXCarrer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\handlersTables\tableBuildingsHandler.aspx.cs">
+      <DependentUpon>tableBuildingsHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\handlersTables\tableBuildingsHandler.aspx.designer.cs">
+      <DependentUpon>tableBuildingsHandler.aspx</DependentUpon>
     </Compile>
     <Compile Include="gentelella-master\production\Handlers\manageStatusCandidatesAlumHandler.aspx.cs">
       <DependentUpon>manageStatusCandidatesAlumHandler.aspx</DependentUpon>
@@ -2357,12 +2755,96 @@
     <Compile Include="gentelella-master\production\Handlers\manageStatusCandidatesAlumHandler.aspx.designer.cs">
       <DependentUpon>manageStatusCandidatesAlumHandler.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\Handlers\OnkeyupSearchCatalogosHandler.aspx.cs">
+      <DependentUpon>OnkeyupSearchCatalogosHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\OnkeyupSearchCatalogosHandler.aspx.designer.cs">
+      <DependentUpon>OnkeyupSearchCatalogosHandler.aspx</DependentUpon>
+    </Compile>
     <Compile Include="gentelella-master\production\Handlers\preRegisterHandler.aspx.cs">
       <DependentUpon>preRegisterHandler.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="gentelella-master\production\Handlers\preRegisterHandler.aspx.designer.cs">
       <DependentUpon>preRegisterHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\recoverDataEmployeHandler.aspx.cs">
+      <DependentUpon>recoverDataEmployeHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\recoverDataEmployeHandler.aspx.designer.cs">
+      <DependentUpon>recoverDataEmployeHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\recoverDivisionsSelectedByEmployeHandler.aspx.cs">
+      <DependentUpon>recoverDivisionsSelectedByEmployeHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\recoverDivisionsSelectedByEmployeHandler.aspx.designer.cs">
+      <DependentUpon>recoverDivisionsSelectedByEmployeHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\recoverTypeSalonesOptionsHandler.aspx.cs">
+      <DependentUpon>recoverTypeSalonesOptionsHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\recoverTypeSalonesOptionsHandler.aspx.designer.cs">
+      <DependentUpon>recoverTypeSalonesOptionsHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestBuildingByCarrerHandler.aspx.cs">
+      <DependentUpon>requestBuildingByCarrerHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestBuildingByCarrerHandler.aspx.designer.cs">
+      <DependentUpon>requestBuildingByCarrerHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestClassroomsByTypeOptionsHandler.aspx.cs">
+      <DependentUpon>requestClassroomsByTypeOptionsHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestClassroomsByTypeOptionsHandler.aspx.designer.cs">
+      <DependentUpon>requestClassroomsByTypeOptionsHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestDataStatusUserHandler.aspx.cs">
+      <DependentUpon>requestDataStatusUserHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestDataStatusUserHandler.aspx.designer.cs">
+      <DependentUpon>requestDataStatusUserHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestStatusCandidateHandler.aspx.cs">
+      <DependentUpon>requestStatusCandidateHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestStatusCandidateHandler.aspx.designer.cs">
+      <DependentUpon>requestStatusCandidateHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestTableEmployeByTypeWorkerHandler.aspx.cs">
+      <DependentUpon>requestTableEmployeByTypeWorkerHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestTableEmployeByTypeWorkerHandler.aspx.designer.cs">
+      <DependentUpon>requestTableEmployeByTypeWorkerHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestUpdateStatusUserHandler.aspx.cs">
+      <DependentUpon>requestUpdateStatusUserHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\requestUpdateStatusUserHandler.aspx.designer.cs">
+      <DependentUpon>requestUpdateStatusUserHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\rolesByTypeWorkerHandler.aspx.cs">
+      <DependentUpon>rolesByTypeWorkerHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\rolesByTypeWorkerHandler.aspx.designer.cs">
+      <DependentUpon>rolesByTypeWorkerHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\rolesSelectedHandler.aspx.cs">
+      <DependentUpon>rolesSelectedHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Handlers\rolesSelectedHandler.aspx.designer.cs">
+      <DependentUpon>rolesSelectedHandler.aspx</DependentUpon>
     </Compile>
     <Compile Include="gentelella-master\production\Handlers\tableCandidatesByDivisHandler.aspx.cs">
       <DependentUpon>tableCandidatesByDivisHandler.aspx</DependentUpon>
@@ -2378,6 +2860,20 @@
     <Compile Include="gentelella-master\production\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\indexUser.aspx.cs">
+      <DependentUpon>indexUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\indexUser.aspx.designer.cs">
+      <DependentUpon>indexUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="gentelella-master\production\manageAcademicLevel.aspx.cs">
       <DependentUpon>manageAcademicLevel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2385,12 +2881,33 @@
     <Compile Include="gentelella-master\production\manageAcademicLevel.aspx.designer.cs">
       <DependentUpon>manageAcademicLevel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\manageBuildings.aspx.cs">
+      <DependentUpon>manageBuildings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageBuildings.aspx.designer.cs">
+      <DependentUpon>manageBuildings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="gentelella-master\production\manageCarrers.aspx.cs">
       <DependentUpon>manageCarrers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="gentelella-master\production\manageCarrers.aspx.designer.cs">
       <DependentUpon>manageCarrers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageClassrooms.aspx.cs">
+      <DependentUpon>manageClassrooms.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageClassrooms.aspx.designer.cs">
+      <DependentUpon>manageClassrooms.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageClassroomType.aspx.cs">
+      <DependentUpon>manageClassroomType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageClassroomType.aspx.designer.cs">
+      <DependentUpon>manageClassroomType.aspx</DependentUpon>
     </Compile>
     <Compile Include="gentelella-master\production\manageDvisions.aspx.cs">
       <DependentUpon>manageDvisions.aspx</DependentUpon>
@@ -2427,6 +2944,13 @@
     <Compile Include="gentelella-master\production\managePeriods.aspx.designer.cs">
       <DependentUpon>managePeriods.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\manageRolesPrivileges.aspx.cs">
+      <DependentUpon>manageRolesPrivileges.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageRolesPrivileges.aspx.designer.cs">
+      <DependentUpon>manageRolesPrivileges.aspx</DependentUpon>
+    </Compile>
     <Compile Include="gentelella-master\production\manageStudent.aspx.cs">
       <DependentUpon>manageStudent.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2448,6 +2972,21 @@
     <Compile Include="gentelella-master\production\manageSubjects.aspx.designer.cs">
       <DependentUpon>manageSubjects.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\manageTypeOfWorker.aspx.cs">
+      <DependentUpon>manageTypeOfWorker.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\manageTypeOfWorker.aspx.designer.cs">
+      <DependentUpon>manageTypeOfWorker.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\menu.aspx.cs">
+      <DependentUpon>menu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="gentelella-master\production\menu.aspx.designer.cs">
+      <DependentUpon>menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="gentelella-master\production\messagesErrors\MessagesErrors.cs" />
     <Compile Include="gentelella-master\production\preRegisterStudent.aspx.cs">
       <DependentUpon>preRegisterStudent.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2469,7 +3008,16 @@
     <Compile Include="gentelella-master\production\Handlers\submitHandlerCatalogos.aspx.designer.cs">
       <DependentUpon>submitHandlerCatalogos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="gentelella-master\production\ValidateUserStatus.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <BrowseToURL>ValidateUserStatus</BrowseToURL>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="gentelella-master\.bowerrc" />
@@ -3027,7 +3575,35 @@
     <Content Include="gentelella-master\vendors\validator\.gitignore" />
     <Content Include="gentelella-master\vendors\validator\package.json" />
     <Content Include="gentelella-master\vendors\validator\README.md" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-grid.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-reboot.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-utilities.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-utilities.min.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap.min.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap.rtl.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\css\bootstrap.rtl.min.css.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.bundle.js.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.esm.js.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.esm.min.js.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.js.map" />
+    <Content Include="gentelella-master\production\bootstrap-5.0.2-dist\js\bootstrap.min.js.map" />
+    <Content Include="gentelella-master\production\binderSurvey\masterSurvay.Master" />
+    <Content Include="gentelella-master\production\binderSurvey\masterCentroEscolar.Master" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3036,6 +3612,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="gentelella-master\production\images\perzonalizadas\usuarios\employeGeneral\" />
+    <Folder Include="gentelella-master\production\images\perzonalizadas\usuarios\employeLocal\" />
+    <Folder Include="gentelella-master\production\images\perzonalizadas\usuarios\students\" />
     <Folder Include="gentelella-master\vendors\bootstrap-datetimepicker\docs\theme\" />
     <Folder Include="gentelella-master\vendors\bootstrap\site\docs\" />
     <Folder Include="gentelella-master\vendors\bootstrap\site\_layouts\" />
@@ -3091,7 +3670,10 @@
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.3\build\Microsoft.TypeScript.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.9.3\build\Microsoft.TypeScript.MSBuild.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.3\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.9.3\build\Microsoft.TypeScript.MSBuild.targets'))" />
   </Target>
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.9.3\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.3\build\Microsoft.TypeScript.MSBuild.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -9,8 +9,7 @@ using Validaciones.util;
 namespace Entidades
 {
     public class Student : User
-    {
-        public int idAlumno { get; set; }      
+    {         
         public int fkIdDivision { get; set; }
         public int fkIdGrupo { get; set; }        
         public Student()
@@ -18,8 +17,7 @@ namespace Entidades
 
         }
         public Student(SqlDataReader renglon) : base(renglon)
-        {            
-            this.idAlumno = (int)(Validation.getValue(renglon, "idAlumno") ?? 0);          
+        {
             this.fkIdDivision = (int)(Validation.getValue(renglon, "fkIdDivision") ?? 0);
             this.fkIdGrupo = (int)(Validation.getValue(renglon, "fkIdGrupo") ?? 0);
         }
@@ -27,7 +25,7 @@ namespace Entidades
         public string ToString()
         {
             return
-                "id:'" + idAlumno + "', " +
+                "id:'" + id + "', " +
                 "matricula: '" + matricula + "', " +
                 "nombres: '" + nombres + "', " +
                 "apellidoP: '" + apellidoP + "', " +
@@ -36,6 +34,7 @@ namespace Entidades
                 "pass: '" + pass + "', " +
                 "correoP: '" + correoP + "', " +
                 "correoIns: '" + correoIns + "', " +
+                "fkDomicilio: '" + fkAddress + "', " +
                 "fechaNac: '" + fechaNac.ToString("yyyy-MM-dd") + "', " +
                 "fkIdGrupo: '" + fkIdGrupo.ToString() + "', " +
                 "fkIdDivision: '" + fkIdDivision.ToString() + "', " +
@@ -44,7 +43,7 @@ namespace Entidades
         public string toString()
         {
             return
-                idAlumno + "," +
+                id + "," +
                 matricula + "," +
                 nombres + "," +
                 apellidoP + "," +
@@ -53,6 +52,7 @@ namespace Entidades
                 pass + "," +
                 correoP + "," +
                 correoIns + "," +
+                fkAddress + "," +
                 fechaNac.ToString("yyyy-MM-dd") + "," +
                 fkIdDivision + "," +
                 fkIdGrupo + "," +

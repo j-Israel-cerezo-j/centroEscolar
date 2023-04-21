@@ -22,7 +22,8 @@
                         icon: 'error',
                         confirmButtonColor: '#572364',
                         title: 'Oops... ¡ Algo salio mal !',
-                        text: i
+                        text: resultado.error,
+                        footer: resultado.data.footeer
                     })
                 }
                 else {
@@ -31,7 +32,8 @@
                             icon: 'error',
                             confirmButtonColor: '#572364',
                             title: 'Oops...',
-                            text: i
+                            text: resultado.error,
+                            footer: resultado.data.footeer
                         })
                     }
                 }

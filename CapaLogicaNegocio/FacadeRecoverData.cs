@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CapaLogicaNegocio.MessageErrors;
 namespace CapaLogicaNegocio
 {
     public  class FacadeRecoverData
@@ -17,6 +17,11 @@ namespace CapaLogicaNegocio
         private SubjectService subjectService = new SubjectService();
         private HoursService timesService= new HoursService();
         private DivisionService divService = new DivisionService();
+        private TypeWorkerService typesWorkers = new TypeWorkerService();
+        private BuildingsService buildingsService = new BuildingsService();
+        private TypeClassroomService typeClassroomService = new TypeClassroomService();
+        private ClassroomService classroomService = new ClassroomService();
+        private RolePrivilegesService rolePrivileges = new RolePrivilegesService();
         public string recoverData(string catalogo, string strId)
         {
             
@@ -49,6 +54,21 @@ namespace CapaLogicaNegocio
                     break;
                 case "divisiones":
                     json = divService.jsonRecoverData(strId);
+                    break;
+                case "edificios":
+                    json = buildingsService.jsonRecoverData(strId);
+                    break;
+                case "typesWorkers":
+                    json = typesWorkers.jsonRecoverData(strId);
+                    break;
+                case "tiposDeSalon":
+                    json = typeClassroomService.jsonRecoverData(strId);
+                    break;
+                case "salones":
+                    json = classroomService.jsonRecoverData(strId);
+                    break;
+                case "privilegiosRoles":
+                    json = rolePrivileges.jsonRecoverData(strId);
                     break;
             }
             return json;

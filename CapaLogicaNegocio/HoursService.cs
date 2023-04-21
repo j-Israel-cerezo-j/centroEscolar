@@ -13,6 +13,8 @@ using CapaLogicaNegocio.deletes;
 using CapaLogicaNegocio.updates;
 using Validaciones.util;
 using CapaLogicaNegocio.Exceptions;
+using CapaLogicaNegocio.MessageErrors;
+using CapaLogicaNegocio.Onkeyups;
 namespace CapaLogicaNegocio
 {
     public class HoursService
@@ -29,8 +31,8 @@ namespace CapaLogicaNegocio
             if (camposEmptysOrNull.Count == 0)
             {
                 Hour hour = new Hour();                
-                string strStartHour = RetrieveAtributesValues.retrieveAtributesValues(submit, "horaInicio");
-                string strEndHour = RetrieveAtributesValues.retrieveAtributesValues(submit, "horaTermino");
+                string strStartHour = RetrieveAtributes.values(submit, "horaInicio");
+                string strEndHour = RetrieveAtributes.values(submit, "horaTermino");
                 vaalidedFormantTimes(strStartHour, strEndHour);
                 hour.horaInicio = Convert.ToDateTime(strStartHour);
                 hour.horaFinal = Convert.ToDateTime(strEndHour);
@@ -72,8 +74,8 @@ namespace CapaLogicaNegocio
             {
                 Hour hour = new Hour();
                 hour.idHorario = Convert.ToInt32(strId);                
-                string strStartHour = RetrieveAtributesValues.retrieveAtributesValues(submit, "horaInicio");
-                string strEndHour = RetrieveAtributesValues.retrieveAtributesValues(submit, "horaTermino");
+                string strStartHour = RetrieveAtributes.values(submit, "horaInicio");
+                string strEndHour = RetrieveAtributes.values(submit, "horaTermino");
                 vaalidedFormantTimes(strStartHour, strEndHour);
                 hour.horaInicio = Convert.ToDateTime(strStartHour);
                 hour.horaFinal = Convert.ToDateTime(strEndHour);
@@ -99,12 +101,31 @@ namespace CapaLogicaNegocio
         {
             if (!Validation.FormantTime(strStartTime))
             {
-                throw new ServiceException("Formato no correcto sobre hora de inicio");
+                throw new ServiceException(MessageError.incorrectFormatInStartTime);
             }
             else if (!Validation.FormantTime(strEndTime))
             {
-                throw new ServiceException("Formato no correcto sobre hora de término");
+                throw new ServiceException(MessageError.incorrectFormatInEndTime);
             }
+        }
+        public List<string> onkeyupSearch(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("", caracteres);          
+
+            var table = Onkeyup.onkeyubSearchh(fields, "horarios");
+            return Converter.ToList(table);
+
+        }
+        public StringBuilder onkeyupSearchTable(string caracteres)
+        {
+            var fields = new Dictionary<string, string>();
+            fields.Add("nombre", caracteres);
+            fields.Add("idHorario", caracteres);
+
+            var table = Onkeyup.onkeyubSearchhTable(fields, "horarios");
+            return Converter.ToJson(table, "idHorario", "id");
+
         }
     }
 }

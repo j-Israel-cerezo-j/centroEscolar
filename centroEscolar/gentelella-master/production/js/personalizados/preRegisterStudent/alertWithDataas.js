@@ -1,12 +1,27 @@
-﻿function alertWithDatas(json) {
-    var s = json.matricula;
-    var a = json.correoInstitucional;
-    var f = json.password;
+﻿function alertWithDatas(json) {   
+
     Swal.fire({
+        title: 'Bien hecho',
+        text: 'Registro exitoso. \n' +
+            'Espera el dia de tu examen.\n' +
+            'Tus nuevos datos son. \n' +
+            'Matricula: ' +
+            json.matricula + '. \n' +
+            'Correo institucional: \n'+
+            json.correoIns + '. \n' +
+            'Contraseña: '+ 
+            'Tu fecha de nacimiento en formato '+ 
+            'AAAA/ M / D.\n' +
+            'NOTA: '+ 
+            'Podras loguearte una vez ' +
+            'que hayas sido aceptado.',
         icon: 'success',
-        title: 'Registro exitoso, espera el dia de tu examen. Tus nuevos datos son: ' +
-            'Matricula: ' + json.matricula + ', Correo institucional: ' + json.correoInstitucional +
-            ', Contraseña: ' + json.password+'. NOTA:Podras loguearte una vez que hayas sido aceptad...',
-        showConfirmButton: false        
-    })
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "Login.aspx";
+        }
+    })   
 }

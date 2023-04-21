@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web;
+using CapaLogicaNegocio.MessageErrors;
 namespace CapaLogicaNegocio
 {
     public class FacadeRequestAjax
@@ -17,7 +18,13 @@ namespace CapaLogicaNegocio
         private SubjectService SubjectService = new SubjectService();
         private HoursService timesService=new HoursService();
         private DivisionService divService = new DivisionService();
-        public bool ajaxRequestCatalogos(string catalogo, Dictionary<string, string> submit)
+        private TypeWorkerService typesWorkers = new TypeWorkerService();
+        private EmployeService employeService = new EmployeService();
+        private BuildingsService buildingsService = new BuildingsService();
+        private TypeClassroomService typeClassroomService = new TypeClassroomService();
+        private ClassroomService classroomService = new ClassroomService();
+        private RolePrivilegesService rolePrivileges = new RolePrivilegesService();
+        public bool ajaxRequestCatalogosAdd(string catalogo, Dictionary<string, string> submit, HttpPostedFile file)
         {
             
             bool ban = false;
@@ -25,9 +32,6 @@ namespace CapaLogicaNegocio
             {
                 case "roles":
                     ban = logicaRol.add(submit);
-                    break;
-                case "alumnos":
-                    ban = studentService.add(submit);
                     break;
                 case "grupos":
                     ban = groupService.add(submit);
@@ -50,13 +54,31 @@ namespace CapaLogicaNegocio
                 case "divisiones":
                     ban = divService.add(submit);
                     break;
+                case "edificios":
+                    ban = buildingsService.add(submit);
+                    break;
+                case "typesWorkers":
+                    ban = typesWorkers.add(submit);
+                    break;
+                case "trabajadores":
+                    ban = employeService.addEmploye(submit, file);
+                    break;
+                case "tiposDeSalon":
+                    ban = typeClassroomService.add(submit);
+                    break;
+                case "salones":
+                    ban = classroomService.add(submit);
+                    break;
+                case "privilegiosRoles":
+                    ban = rolePrivileges.add(submit,true);
+                    break;
             }
             return ban;
         }
-        public string ajaxRequestCatalogosTable(string add)
+        public string ajaxRequestCatalogosTable(string catalogue,string typeWorker="")
         {            
             string jsonTable = "";
-            switch (add)
+            switch (catalogue)
             {
                 case "roles":
                     jsonTable = logicaRol.jsonRoles();
@@ -84,6 +106,24 @@ namespace CapaLogicaNegocio
                     break;
                 case "divisiones":
                     jsonTable = divService.jsonDivisions();
+                    break;
+                case "edificios":
+                    jsonTable = buildingsService.jsonBuildings();
+                    break;
+                case "typesWorkers":
+                    jsonTable = typesWorkers.jsonTypesWorkers();
+                    break;
+                case "trabajadores":
+                    jsonTable = employeService.buildTableEmployeByTypeWorker(typeWorker);
+                    break;
+                case "tiposDeSalon":
+                    jsonTable = typeClassroomService.jsonTypeClassrooms();
+                    break;
+                case "salones":
+                    jsonTable = classroomService.jsonClasrooms();
+                    break;
+                case "privilegiosRoles":
+                    jsonTable = rolePrivileges.jsonrolesPrivileges();
                     break;
             }
             return jsonTable;
@@ -120,10 +160,25 @@ namespace CapaLogicaNegocio
                 case "divisiones":
                     ban = divService.deleteDivision(strIds);
                     break;
+                case "edificios":
+                    ban = buildingsService.deleteBuildings(strIds);
+                    break;
+                case "typesWorkers":
+                    ban = typesWorkers.deleteTypesWorkers(strIds);
+                    break;
+                case "tiposDeSalon":
+                    ban = typeClassroomService.deleteTypeClassroom(strIds);
+                    break;
+                case "salones":
+                    ban = classroomService.deleteClassroom(strIds);
+                    break;
+                case "privilegiosRoles":
+                    ban = rolePrivileges.deletePrivilegesRoles(strIds);
+                    break;
             }
             return ban;
         }
-        public bool ajaxRequestUpdate(string catalogo, Dictionary<string, string> submit,string strId)
+        public bool ajaxRequestUpdate(string catalogo, Dictionary<string, string> submit,string strId, HttpPostedFile file)
         {            
             bool ban = false;
             switch (catalogo)
@@ -132,7 +187,7 @@ namespace CapaLogicaNegocio
                     ban = logicaRol.updateRole(submit,strId);
                     break;
                 case "alumnos":
-                    ban = studentService.updateStudent(submit, strId);
+                    ban = studentService.updateStudent(submit, strId, file);
                     break ;
                 case "grupos":
                     ban = groupService.updateGroup(submit, strId);
@@ -154,6 +209,24 @@ namespace CapaLogicaNegocio
                     break;
                 case "divisiones":
                     ban = divService.updateDivision(submit, strId);
+                    break;
+                case "edificios":
+                    ban = buildingsService.updateDivision(submit, strId);
+                    break;
+                case "typesWorkers":
+                    ban = typesWorkers.updateTypesWorkers(submit, strId);
+                    break;
+                case "trabajadores":
+                    ban = employeService.updateEmploye(submit, strId, file);
+                    break;
+                case "tiposDeSalon":
+                    ban = typeClassroomService.updateTypeClassroom(submit, strId);
+                    break;
+                case "salones":
+                    ban = classroomService.updateClassroom(submit, strId);
+                    break;
+                case "privilegiosRoles":
+                    ban = rolePrivileges.update(submit, strId);
                     break;
             }
             return ban;

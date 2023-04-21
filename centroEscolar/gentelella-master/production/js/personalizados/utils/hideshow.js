@@ -1,17 +1,17 @@
-﻿function hideshow() {
-    var password = document.getElementById("password");
-    var slash = document.getElementById("slash");
-    var eye = document.getElementById("eye");
+﻿function hideshow(idInputPass, idInputIcon, idInputIcon2) {
+    var password = document.getElementById(idInputPass);
+    var slash = document.getElementById(idInputIcon);
+    var eye = document.getElementById(idInputIcon2);
 
     if (password.type === 'password') {
         password.type = "text";
-        slash.style.display = "block";
-        eye.style.display = "none";
+        slash.style.display = "none";
+        eye.style.display = "block";
     }
     else {
         password.type = "password";
-        slash.style.display = "none";
-        eye.style.display = "block";
+        slash.style.display = "block";
+        eye.style.display = "none";
     }
 
 }

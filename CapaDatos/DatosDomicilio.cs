@@ -213,5 +213,39 @@ namespace CapaDatos
             }
             return ban;
         }
+        public Domicilie recoverDataAddress(int id)
+        {
+            SqlDataReader renglon;
+            Domicilie domicilie = null;
+            try
+            {
+
+                Comando.Connection = Conexion;
+                Comando.CommandType = CommandType.StoredProcedure;
+                Comando.CommandText = "pro_recoverDataAddress";
+                Comando.Parameters.Add(new SqlParameter("@idAddress", SqlDbType.Int));
+                Comando.Parameters["@idAddress"].Value = id;
+                Conexion.Open();
+                renglon = Comando.ExecuteReader();
+                if (renglon.Read())
+                {
+                    domicilie = new Domicilie(renglon);
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (Conexion.State == ConnectionState.Open)
+                {
+                    Conexion.Close();
+                }
+                Comando.Parameters.Clear();
+            }
+            return domicilie;
+        }
     }
 }
